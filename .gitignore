@@ -1,4 +1,6 @@
-/target
-/project/target
+target/
+/src/main/gen
+/src/main/res/values/key.xml
 /device-*.png
+.idea
 .DS_store

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Garaponoid</string>
+  <string name="app_name">Garaponoid</string>
+  <string name="garapon_tv_account">Garapon TV Account</string>
+  <string name="sign_in">Sign in</string>
 </resources>

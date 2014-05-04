@@ -4,7 +4,7 @@
 # Build
 Create a file `src/main/res/values/key.xml` with the following content:
 
-```
+```xml
 <resources>
   <string name="gtv_dev_id">my_developer_id</string>
 </resources>
@@ -24,10 +24,11 @@ $ sbt
 Apache License 2.0
 
 # Credits
-Garaponoid is built on top of the following works:
+Garaponoid is powered by the following works:
 
 - [Garapon4S](https://github.com/ikuo/garapon4s) - Apache License 2.0
 - [Scaloid](https://github.com/pocorall/scaloid) - Apache License 2.0
+- [sbt android plugin](https://github.com/jberkel/android-plugin) (build time)
 
 The logo (TV_icon.svg and tv.png) is derived from:
 

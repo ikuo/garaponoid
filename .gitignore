@@ -1,4 +1,5 @@
 target/
+/out
 /src/main/gen
 /src/main/res/values/key.xml
 /device-*.png

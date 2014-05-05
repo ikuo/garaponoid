@@ -9,15 +9,15 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 import org.scaloid.common._
 
-class MainActivity extends SActivity with TypedActivity { activity =>
+class MainActivity extends BaseActivity {
   private lazy val textView = findView(TR.textview)
 
   override def onCreate(bundle: Bundle) {
     setErrorHandler
+    setContentView(R.layout.main)
     getActionBar.show
     super.onCreate(bundle)
 
-    setContentView(R.layout.main)
     promptSignIn
   }
 
@@ -32,27 +32,13 @@ class MainActivity extends SActivity with TypedActivity { activity =>
         )
       )
 
-    info("set up searc view")
-
     super.onCreateOptionsMenu(menu)
   }
 
   private def promptSignIn = new SignInDialog(signIn, this).show
 
-  private def setErrorHandler {
-    Thread.setDefaultUncaughtExceptionHandler(
-      new Thread.UncaughtExceptionHandler {
-        override def uncaughtException(thread: Thread, throwable: Throwable) {
-          warn(throwable.getMessage)
-          warn(throwable.getStackTrace.mkString)
-        }
-      }
-    )
-  }
-
   // TODO Replace this skeleton code
   private def signIn(loginId: String, md5Password: String): Unit = future {
-    setErrorHandler
     runOnUiThread(textView.text(s"Sign in with (${loginId}, ${md5Password}) ..."))
 
     try {
@@ -65,8 +51,8 @@ class MainActivity extends SActivity with TypedActivity { activity =>
     } catch {
       case e: Throwable => {
         toast("Invalid username or password")
-        warn("Caught exception: " + e.getMessage)
-        warn(e.getStackTrace.mkString)
+        error("Caught exception: " + e.getMessage)
+        error(e.getStackTrace.mkString)
         promptSignIn
       }
     }

@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.content.Intent
 import org.scaloid.common._
 
-class ProgramsActivity extends SActivity with TypedActivity { activity =>
-
+class ProgramsActivity extends BaseActivity {
   override def onCreate(bundle: Bundle) {
+    setErrorHandler
     super.onCreate(bundle)
 
     handleIntent(getIntent)

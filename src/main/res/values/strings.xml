@@ -5,4 +5,6 @@
   <string name="action_search">Search programs</string>
   <string name="action_preferences">Preferences</string>
   <string name="search_hint">Program name etc.</string>
+  <string name="unknown_user">Unknown user</string>
+  <string name="wrong_password">Wrong password</string>
 </resources>

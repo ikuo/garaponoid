@@ -6,11 +6,12 @@ import java.security.MessageDigest
 import java.math.BigInteger
 
 class SignInDialog(
+  defaultLoginId: String = "",
   signIn: (String, String) => Unit,
   implicit val activity: SActivity
 ) {
 
-  private lazy val loginIdText = new SEditText()
+  private lazy val loginIdText = new SEditText(defaultLoginId)
   private lazy val passwordText = new SEditText()
   private lazy val loginId = loginIdText.text.toString
   private lazy val md5Password = md5sum(passwordText.text.toString)

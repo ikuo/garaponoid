@@ -1,7 +1,10 @@
 package com.github.ikuo.garaponoid
 
-import _root_.android.app.Activity
-import _root_.android.os.Bundle
+import android.app.Activity
+import android.content.ComponentName
+import android.os.Bundle
+import android.view.Menu
+import android.widget.SearchView
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import org.scaloid.common._
@@ -11,9 +14,27 @@ class MainActivity extends SActivity with TypedActivity { activity =>
 
   override def onCreate(bundle: Bundle) {
     setErrorHandler
+    getActionBar.show
     super.onCreate(bundle)
+
     setContentView(R.layout.main)
     promptSignIn
+  }
+
+  override def onCreateOptionsMenu(menu: Menu) = {
+    getMenuInflater.inflate(R.menu.main_activity_actions, menu)
+
+    menu.findItem(R.id.action_search).
+      getActionView.asInstanceOf[SearchView].
+      setSearchableInfo(
+        searchManager.getSearchableInfo(
+          new ComponentName(getApplicationContext, classOf[ProgramsActivity])
+        )
+      )
+
+    info("set up searc view")
+
+    super.onCreateOptionsMenu(menu)
   }
 
   private def promptSignIn = new SignInDialog(signIn, this).show

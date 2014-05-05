@@ -2,4 +2,7 @@
   <string name="app_name">Garaponoid</string>
   <string name="garapon_tv_account">Garapon TV Account</string>
   <string name="sign_in">Sign in</string>
+  <string name="action_search">Search programs</string>
+  <string name="action_preferences">Preferences</string>
+  <string name="search_hint">Program name etc.</string>
 </resources>

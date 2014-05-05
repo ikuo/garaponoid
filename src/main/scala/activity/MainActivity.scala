@@ -26,11 +26,7 @@ class MainActivity extends BaseActivity {
 
     menu.findItem(R.id.action_search).
       getActionView.asInstanceOf[SearchView].
-      setSearchableInfo(
-        searchManager.getSearchableInfo(
-          new ComponentName(getApplicationContext, classOf[ProgramsActivity])
-        )
-      )
+      setSearchableInfo(ProgramsActivity.searchableInfo)
 
     super.onCreateOptionsMenu(menu)
   }

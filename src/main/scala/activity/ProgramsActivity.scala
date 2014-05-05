@@ -1,6 +1,7 @@
 package com.github.ikuo.garaponoid
 
 import android.app.SearchManager
+import android.content.{Context, ComponentName}
 import android.os.Bundle
 import android.content.Intent
 import org.scaloid.common._
@@ -22,4 +23,12 @@ class ProgramsActivity extends BaseActivity {
       //use the query to search your data somehow
     }
   }
+}
+
+object ProgramsActivity {
+  def componentName(implicit context: Context) =
+    new ComponentName(context, classOf[ProgramsActivity])
+
+  def searchableInfo(implicit context: Context) =
+    searchManager.getSearchableInfo(componentName)
 }

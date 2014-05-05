@@ -17,10 +17,16 @@ class ProgramsActivity extends BaseActivity {
   override def onNewIntent(intent: Intent) = handleIntent(intent)
 
   private def handleIntent(intent: Intent) {
-    info("Got search intent")
-    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+    if (intent.getAction == Intent.ACTION_SEARCH) {
       val query = intent.getStringExtra(SearchManager.QUERY);
+      info(query)
       //use the query to search your data somehow
+      /*
+      val results = tvSession.search(key = "News")
+      val program = results.programs(0)
+      val url = tvSession.webViewerUrl(program.gtvId)
+      runOnUiThread(openUri(url))
+      */
     }
   }
 }

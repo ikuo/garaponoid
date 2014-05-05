@@ -10,7 +10,7 @@ extends SActivity with TypedActivity
       new Thread.UncaughtExceptionHandler {
         override def uncaughtException(thread: Thread, throwable: Throwable) {
           error(throwable.getMessage)
-          error(throwable.getStackTrace.mkString)
+          error(throwable.getStackTrace.mkString("\n"))
         }
       }
     )

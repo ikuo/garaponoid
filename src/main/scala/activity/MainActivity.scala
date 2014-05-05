@@ -1,15 +1,15 @@
 package com.github.ikuo.garaponoid
 
 import android.app.Activity
-import android.content.ComponentName
 import android.os.Bundle
 import android.view.Menu
 import android.widget.SearchView
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import org.scaloid.common._
+import Tapper.Implicits._
 
-class MainActivity extends BaseActivity {
+class MainActivity extends BaseActivity with TvServiceClient {
   private lazy val textView = findView(TR.textview)
 
   override def onCreate(bundle: Bundle) {
@@ -33,23 +33,20 @@ class MainActivity extends BaseActivity {
 
   private def promptSignIn = new SignInDialog(signIn, this).show
 
-  // TODO Replace this skeleton code
   private def signIn(loginId: String, md5Password: String): Unit = future {
     runOnUiThread(textView.text(s"Sign in with (${loginId}, ${md5Password}) ..."))
 
-    try {
-      val tvClient = new com.github.ikuo.garapon4s.TvClient(getString(R.string.gtv_dev_id))
-      val tvSession = tvClient.newSession(loginId, md5Password)
-      val results = tvSession.search(key = "News")
-      val program = results.programs(0)
-      val url = tvSession.webViewerUrl(program.gtvId)
-      runOnUiThread(openUri(url))
-    } catch {
-      case e: Throwable => {
-        toast("Invalid username or password")
-        error("Caught exception: " + e.getMessage)
-        error(e.getStackTrace.mkString)
-        promptSignIn
+    tv.run { service =>
+      try {
+        service.updateAccount(loginId, md5Password)
+        service.refreshSession
+      } catch {
+        case e: Throwable => { // TODO Narrow exception class
+          toast("Invalid username or password")
+          error("Caught exception: " + e.getMessage)
+          error(e.getStackTrace.mkString)
+          promptSignIn
+        }
       }
     }
   }

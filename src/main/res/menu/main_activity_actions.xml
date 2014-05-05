@@ -5,14 +5,15 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/action_search"
         android:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView"
-  >
-  </item>
+        android:actionViewClass="android.widget.SearchView" />
+
+  <item android:id="@+id/action_sign_out"
+        android:icon="@android:drawable/ic_menu_set_as"
+        android:title="@string/sign_out"
+        android:showAsAction="never" />
 
   <item android:id="@+id/action_preferences"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/action_preferences"
-        android:showAsAction="never"
-  >
-  </item>
+        android:showAsAction="never" />
 </menu>

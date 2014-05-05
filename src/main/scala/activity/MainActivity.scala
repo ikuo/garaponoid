@@ -2,7 +2,7 @@ package com.github.ikuo.garaponoid
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.Menu
+import android.view.{Menu, MenuItem}
 import android.widget.SearchView
 import org.scaloid.common._
 import Tapper.Implicits._
@@ -27,5 +27,12 @@ class MainActivity extends BaseActivity with TvServiceClient {
       setSearchableInfo(ProgramsActivity.searchableInfo)
 
     super.onCreateOptionsMenu(menu)
+  }
+
+  override def onOptionsItemSelected(item: MenuItem) = {
+    item.getItemId match {
+      case R.id.action_sign_out => signOut
+    }
+    super.onOptionsItemSelected(item)
   }
 }

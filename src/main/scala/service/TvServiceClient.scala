@@ -11,6 +11,13 @@ trait TvServiceClient extends SActivity {
   protected def promptSignIn(userName: String) =
     new SignInDialog(userName, signIn, this).show
 
+  protected def signOut {
+    new AlertDialogBuilder(null, R.string.confirm_sign_out) {
+      positiveButton(android.R.string.ok, tvService.run(_.signOut))
+      negativeButton(android.R.string.cancel)
+    }.show
+  }
+
   private def signIn(loginId: String, md5Password: String): Unit = future {
     //TODO show a PopupWindow
     tvService.run { tv =>

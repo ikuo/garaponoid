@@ -18,6 +18,13 @@ class TvService extends LocalService {
     editor.commit
   }
 
+  def signOut {
+    val editor = defaultSharedPreferences.edit
+    editor.putString("loginId", null)
+    editor.putString("md5Password", null)
+    editor.commit
+  }
+
   def refreshSession {
     this.tvSession = Some(tvClient.newSession(loginId, md5Password))
   }

@@ -6,7 +6,7 @@ import org.scaloid.common._
 import com.github.ikuo.garapon4s._
 
 trait TvServiceClient extends SActivity {
-  protected val tvService = new LocalServiceConnection[TvService]
+  val tvService = new LocalServiceConnection[TvService]
 
   protected def promptSignIn(userName: String) =
     new SignInDialog(userName, signIn, this).show
@@ -18,21 +18,28 @@ trait TvServiceClient extends SActivity {
     }.show
   }
 
-  private def signIn(loginId: String, md5Password: String): Unit = future {
-    //TODO show a PopupWindow
+  private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
+      tv.updateAccount(loginId, md5Password)
+      refreshSession
+    }
+
+  //TODO show a PopupWindow with indicator
+  protected def refreshSession = tvService.run { tv =>
+    info("refreshSession")
+    future {
       try {
-        tv.updateAccount(loginId, md5Password)
         tv.refreshSession
+        info(s"tvSession empty == ${tv.session.isEmpty}")
       } catch {
         case e: UnknownUser => {
           new AlertDialogBuilder(null, R.string.unknown_user) {
-            positiveButton(android.R.string.ok, promptSignIn(loginId))
+            positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
           }.show
         }
         case e: WrongPassword => {
           new AlertDialogBuilder(null, R.string.wrong_password) {
-            positiveButton(android.R.string.ok, promptSignIn(loginId))
+            positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
           }.show
         }
       }

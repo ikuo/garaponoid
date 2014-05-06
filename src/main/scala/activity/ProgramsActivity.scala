@@ -3,31 +3,46 @@ package com.github.ikuo.garaponoid
 import android.app.SearchManager
 import android.content.{Context, ComponentName}
 import android.os.Bundle
+import android.view.{Menu, MenuItem, Window}
 import android.content.Intent
 import org.scaloid.common._
+import Tapper.Implicits._
 
-class ProgramsActivity extends BaseActivity {
-  override def onCreate(bundle: Bundle) {
+class ProgramsActivity extends BaseActivity with TvServiceClient {
+  val fragmentTag = "programs_fragment"
+  override def onCreate(savedInstanceState: Bundle) {
     setErrorHandler
-    super.onCreate(bundle)
-
-    handleIntent(getIntent)
+    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
+    super.onCreate(savedInstanceState)
+    getActionBar.setDisplayHomeAsUpEnabled(true)
+    setContentView(R.layout.programs)
   }
 
-  override def onNewIntent(intent: Intent) = handleIntent(intent)
+  override def onNewIntent(intent: Intent) = {
+    handleIntent(intent)
+  }
 
   private def handleIntent(intent: Intent) {
     if (intent.getAction == Intent.ACTION_SEARCH) {
       val query = intent.getStringExtra(SearchManager.QUERY);
-      info(query)
-      //use the query to search your data somehow
-      /*
-      val results = tvSession.search(key = "News")
-      val program = results.programs(0)
-      val url = tvSession.webViewerUrl(program.gtvId)
-      runOnUiThread(openUri(url))
-      */
+      showFragment(query)
     }
+  }
+
+  override def onOptionsItemSelected(item: MenuItem) = {
+    item.getItemId match {
+      case android.R.id.home => finish
+      case _ => ()
+    }
+    super.onOptionsItemSelected(item)
+  }
+
+  private def showFragment(query: String) {
+    val arguments = (new Bundle).tap(_.putString("query", query))
+    val fragment = (new ProgramsFragment).tap(_.setArguments(arguments))
+    getFragmentManager.beginTransaction.
+      add(R.id.fragment_container, fragment, fragmentTag).
+      commit
   }
 }
 

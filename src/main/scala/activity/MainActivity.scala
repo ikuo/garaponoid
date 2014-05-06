@@ -16,7 +16,15 @@ class MainActivity extends BaseActivity with TvServiceClient {
     getActionBar.show
     super.onCreate(bundle)
 
-    promptSignIn("")
+    startService(TvService.intent)
+    tvService.run { tv =>
+      if (tv.isSignedIn) refreshSession
+      else promptSignIn("")
+    }
+  }
+
+  override def onDestroy {
+    stopService(TvService.intent)
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {
@@ -32,6 +40,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
   override def onOptionsItemSelected(item: MenuItem) = {
     item.getItemId match {
       case R.id.action_sign_out => signOut
+      case _ => ()
     }
     super.onOptionsItemSelected(item)
   }

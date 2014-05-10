@@ -5,14 +5,21 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
-version := "0.2.0"
+version := "0.2.1-SNAPSHOT"
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.10.3"
+
+versionName in Android := Some(version.value)
+
+versionCode in Android := Some(1)
+
+targetSdkVersion in Android := 19
+
+platformTarget in Android :=
+  "android-" + (targetSdkVersion in Android).value.toString
 
 scalacOptions in Compile ++=
   Seq("-deprecation", "-feature", "-language:implicitConversions", "-unchecked")
-
-platformTarget in Android := "android-19"
 
 useProguard in Android := true
 

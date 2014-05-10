@@ -15,6 +15,8 @@ versionCode in Android := Some(1)
 
 targetSdkVersion in Android := 19
 
+minSdkVersion in Android := 15
+
 platformTarget in Android :=
   "android-" + (targetSdkVersion in Android).value.toString
 

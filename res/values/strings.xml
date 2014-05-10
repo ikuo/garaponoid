@@ -9,4 +9,5 @@
   <string name="unknown_user">Unknown user</string>
   <string name="wrong_password">Wrong password</string>
   <string name="confirm_sign_out">Sign out ?</string>
+  <string name="version">Version</string>
 </resources>

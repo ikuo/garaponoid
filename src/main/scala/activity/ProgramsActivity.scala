@@ -10,12 +10,13 @@ import Tapper.Implicits._
 
 class ProgramsActivity extends BaseActivity with TvServiceClient {
   val fragmentTag = "programs_fragment"
+
   override def onCreate(savedInstanceState: Bundle) {
     setErrorHandler
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     super.onCreate(savedInstanceState)
     getActionBar.setDisplayHomeAsUpEnabled(true)
-    setContentView(R.layout.programs)
+    setContentView(R.layout.fragment_container)
   }
 
   override def onNewIntent(intent: Intent) = {

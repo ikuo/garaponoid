@@ -3,7 +3,8 @@ package com.github.ikuo.garaponoid
 import android.app.Activity
 import android.os.Bundle
 import android.view.{Menu, MenuItem}
-import android.widget.SearchView
+import android.widget.{SearchView, TextView}
+import TypedResource._
 import org.scaloid.common._
 import Tapper.Implicits._
 

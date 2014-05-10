@@ -1,9 +1,9 @@
 package com.github.ikuo.garaponoid
 
 import org.scaloid.common._
+import TypedResource._
 
-abstract class BaseActivity
-extends SActivity with TypedActivity
+abstract class BaseActivity extends SActivity with TypedActivity
 {
   protected def setErrorHandler {
     Thread.setDefaultUncaughtExceptionHandler(

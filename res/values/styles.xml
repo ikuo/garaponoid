@@ -2,5 +2,6 @@
 <resources>
   <style name="card.main_layout">
     <item name="android:padding">10dp</item>
+    <item name="android:background">@android:color/white</item>
   </style>
 </resources>

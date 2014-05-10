@@ -56,3 +56,13 @@ run <<= run in Android
 
 install <<= install in Android
 // }}}
+
+val cleanProguard = taskKey[Unit]("Clean output files of proguard")
+
+cleanProguard := {
+  import sys.process._
+  "rm -rf target/scala-2.10/cache/garaponoid/global/proguard_cache".!
+  "rm -rf bin/classes.proguard.jar".!
+}
+
+addCommandAlias("restartApp", ";cleanProguard;run")

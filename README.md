@@ -16,13 +16,20 @@ Make package and start the app by sbt:
 
 ```
 $ sbt
-> package
-> start
+> android:package
+> run
 ```
 
 When using other build tool, local.properties may be required:
 ```
 cp local.properties.sample local.properties
+```
+
+## Build utility
+To restart app from proguard process, use `restartApp` task:
+
+```
+sbt> restartApp
 ```
 
 # Coding Style

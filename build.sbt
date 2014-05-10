@@ -5,6 +5,8 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
+version := "0.2.0"
+
 scalaVersion := "2.10.2"
 
 scalacOptions in Compile ++=

@@ -17,7 +17,8 @@ useProguard in Android := true
 proguardOptions in Android += "@project/proguard.cfg"
 
 proguardCache in Android ++= Seq(
-  ProguardCache("org.scaloid") % "org.scaloid" %% "scaloid",
+  ProguardCache("scaloid") % "org.scaloid" %% "scaloid",
+  ProguardCache("garapon4s") % "com.github.ikuo" % "garapon4s_2.10",
   ProguardCache("cardslib") % "com.github.gabrielemariotti.cards" % "library"
 )
 

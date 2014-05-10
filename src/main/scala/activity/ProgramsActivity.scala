@@ -12,11 +12,8 @@ class ProgramsActivity extends BaseActivity with TvServiceClient {
   val fragmentTag = "programs_fragment"
 
   override def onCreate(savedInstanceState: Bundle) {
-    setErrorHandler
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
-    super.onCreate(savedInstanceState)
-    getActionBar.setDisplayHomeAsUpEnabled(true)
-    setContentView(R.layout.fragment_container)
+    super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
   }
 
   override def onNewIntent(intent: Intent) = {
@@ -26,24 +23,9 @@ class ProgramsActivity extends BaseActivity with TvServiceClient {
   private def handleIntent(intent: Intent) {
     if (intent.getAction == Intent.ACTION_SEARCH) {
       val query = intent.getStringExtra(SearchManager.QUERY);
-      showFragment(query)
+      val arguments = (new Bundle).tap(_.putString("query", query))
+      showFragment(new ProgramsFragment, Some(arguments))
     }
-  }
-
-  override def onOptionsItemSelected(item: MenuItem) = {
-    item.getItemId match {
-      case android.R.id.home => finish
-      case _ => ()
-    }
-    super.onOptionsItemSelected(item)
-  }
-
-  private def showFragment(query: String) {
-    val arguments = (new Bundle).tap(_.putString("query", query))
-    val fragment = (new ProgramsFragment).tap(_.setArguments(arguments))
-    getFragmentManager.beginTransaction.
-      add(R.id.fragment_container, fragment, fragmentTag).
-      commit
   }
 }
 

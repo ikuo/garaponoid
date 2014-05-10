@@ -10,7 +10,21 @@ scalaVersion := "2.10.2"
 scalacOptions in Compile ++=
   Seq("-deprecation", "-feature", "-language:implicitConversions", "-unchecked")
 
-platformTarget in Android := "android-16"
+platformTarget in Android := "android-19"
+
+useProguard in Android := true
+
+proguardOptions in Android += "@project/proguard.cfg"
+
+proguardCache in Android ++= Seq(
+  ProguardCache("org.scaloid") % "org.scaloid" %% "scaloid",
+  ProguardCache("cardslib") % "com.github.gabrielemariotti.cards" % "library"
+)
+
+apkbuildExcludes in Android ++= Seq(
+  "META-INF/LICENSE",
+  "META-INF/NOTICE"
+)
 
 resolvers ++= Seq(
   "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",

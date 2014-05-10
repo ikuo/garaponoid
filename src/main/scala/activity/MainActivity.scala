@@ -11,7 +11,7 @@ import Tapper.Implicits._
 class MainActivity extends BaseActivity with TvServiceClient {
   override def onCreate(bundle: Bundle): Unit = {
     getActionBar.show
-    startService(TvService.intent)
+    startService[TvService]
 
     super.onCreate(bundle, Some(R.layout.main))
 
@@ -22,7 +22,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
   }
 
   override def onDestroy: Unit = {
-    stopService(TvService.intent)
+    stopService[TvService]
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {
@@ -38,6 +38,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
   override def onOptionsItemSelected(item: MenuItem) = {
     item.getItemId match {
       case R.id.action_sign_out => signOut
+      case R.id.action_about => startActivity(SIntent[AboutActivity])
       case _ => ()
     }
     super.onOptionsItemSelected(item)

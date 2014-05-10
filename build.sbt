@@ -11,7 +11,7 @@ scalaVersion := "2.10.3"
 
 versionName in Android := Some(version.value)
 
-versionCode in Android := Some(1)
+versionCode in Android := Some(2)
 
 targetSdkVersion in Android := 19
 

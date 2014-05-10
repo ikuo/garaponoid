@@ -4,40 +4,68 @@
   android:id="@+id/about_view"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_height="wrap_content"
 >
-  <ImageView
-    android:layout_width="wrap_content"
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:padding="20dp"
-    android:src="@drawable/tv"
+    android:paddingTop="10dp"
+  >
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="20dp"
+      android:src="@drawable/tv"
+      />
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      >
+      <TextView
+        android:id="@+id/version_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version"
+        />
+      <TextView
+        android:id="@+id/version_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/unknown"
+        />
+      <TextView
+        android:id="@+id/version_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/default_version_code"
+        />
+    </LinearLayout>
+  </LinearLayout>
+
+  <FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="2dp"
+    android:background="@android:color/darker_gray"
+    android:layout_margin="30dp"
   />
 
   <LinearLayout
-    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:gravity="center"
   >
     <TextView
-      android:id="@+id/version_text"
+      android:id="@+id/license"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/version"
+      android:text="@string/open_source_license"
     />
-    <TextView
-      android:id="@+id/version_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="10dp"
-      android:text="@string/unknown"
-    />
-    <TextView
-      android:id="@+id/version_code"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="10dp"
-      android:text="@string/default_version_code"
-      />
   </LinearLayout>
 </LinearLayout>

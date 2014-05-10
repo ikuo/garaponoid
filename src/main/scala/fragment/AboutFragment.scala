@@ -5,6 +5,8 @@ import android.os.Build.VERSION
 import android.app.{Activity, Fragment}
 import android.view.{View, ViewGroup, LayoutInflater}
 import android.widget.TextView
+import android.text.Html
+import org.scaloid.common._
 import TypedResource._
 
 class AboutFragment extends Fragment {
@@ -21,9 +23,13 @@ class AboutFragment extends Fragment {
     container: ViewGroup,
     savedInstanceState: Bundle
   ): View = {
-    val view = inflater.inflate(R.layout.about_view, container, false)
-    view.findView[TextView](TR.version_name).setText(versionName)
-    view.findView[TextView](TR.version_code).setText(s"(#${versionCode})")
+    implicit val view = inflater.inflate(R.layout.about_view, container, false)
+    textView(TR.version_name).text(versionName)
+    textView(TR.version_code).text(s"(#${versionCode})")
+    textView(TR.license).setText(Html.fromHtml(getString(R.string.open_source_license)))
     view
   }
+
+  private def textView(id: TypedResource[TextView])(implicit view: View) =
+    view.findView[TextView](id)
 }

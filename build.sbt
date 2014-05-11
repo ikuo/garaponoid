@@ -5,13 +5,13 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
-version := "0.2.1-SNAPSHOT"
+version := "0.2.1"
 
 scalaVersion := "2.10.3"
 
 versionName in Android := Some(version.value)
 
-versionCode in Android := Some(1)
+versionCode in Android := Some(3)
 
 targetSdkVersion in Android := 19
 
@@ -56,3 +56,13 @@ run <<= run in Android
 
 install <<= install in Android
 // }}}
+
+val cleanProguard = taskKey[Unit]("Clean output files of proguard")
+
+cleanProguard := {
+  import sys.process._
+  "rm -rf target/scala-2.10/cache/garaponoid/global/proguard_cache".!
+  "rm -rf bin/classes.proguard.jar".!
+}
+
+addCommandAlias("restartApp", ";cleanProguard;run")

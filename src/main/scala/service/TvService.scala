@@ -4,7 +4,6 @@ import org.scaloid.common._
 import com.github.ikuo.garapon4s.{TvClient, TvSession}
 import android.content.Context
 import android.content.ComponentName
-import android.content.Intent
 import android.os.IBinder
 
 class TvService extends LocalService {
@@ -37,9 +36,4 @@ class TvService extends LocalService {
   def isSignedIn = {
     defaultSharedPreferences.getString("loginId", null) != null
   }
-}
-
-object TvService {
-  def intent(implicit context: Context) =
-    new Intent(context, classOf[TvService])
 }

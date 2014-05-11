@@ -16,13 +16,37 @@ Make package and start the app by sbt:
 
 ```
 $ sbt
-> package
-> start
+> android:package
+> run
 ```
 
 When using other build tool, local.properties may be required:
 ```
 cp local.properties.sample local.properties
+```
+
+## Build utility
+To restart app from proguard process, use `restartApp` task:
+
+```
+sbt> restartApp
+```
+
+# Coding Style
+Using [Scala Style Guide](http://docs.scala-lang.org/style/)
+and the followings:
+
+## Method declaration
+When many arguments, break line for each end of argument declaration:
+
+```scala
+def method1(
+ argument1: String,
+ argument2: String,
+ ...
+): Unit = {
+  ...
+}
 ```
 
 # License

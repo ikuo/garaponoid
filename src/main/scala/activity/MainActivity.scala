@@ -3,29 +3,27 @@ package com.github.ikuo.garaponoid
 import android.app.Activity
 import android.os.Bundle
 import android.view.{Menu, MenuItem}
-import android.widget.{SearchView, TextView}
+import android.widget.SearchView
 import TypedResource._
 import org.scaloid.common._
 import Tapper.Implicits._
 
 class MainActivity extends BaseActivity with TvServiceClient {
-  private lazy val textView = findView(TR.textview)
-
-  override def onCreate(bundle: Bundle) {
-    setErrorHandler
-    setContentView(R.layout.main)
+  override def onCreate(bundle: Bundle): Unit = {
     getActionBar.show
-    super.onCreate(bundle)
+    startService[TvService]
 
-    startService(TvService.intent)
+    super.onCreate(bundle, Some(R.layout.main))
+
     tvService.run { tv =>
       if (tv.isSignedIn) refreshSession
       else promptSignIn("")
     }
   }
 
-  override def onDestroy {
-    stopService(TvService.intent)
+  override def onDestroy: Unit = {
+    stopService[TvService]
+    super.onDestroy
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {
@@ -41,6 +39,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
   override def onOptionsItemSelected(item: MenuItem) = {
     item.getItemId match {
       case R.id.action_sign_out => signOut
+      case R.id.action_about => startActivity(SIntent[AboutActivity])
       case _ => ()
     }
     super.onOptionsItemSelected(item)

@@ -46,9 +46,23 @@ abstract class BaseActivity extends SActivity with TypedActivity {
     fragment: T,
     arguments: Option[Bundle] = None,
     containerResourceId: Int = R.id.fragment_container
+  ): FragmentTransaction =
+    fragmentTransaction(fragment, arguments).
+      add(containerResourceId, fragment)
+
+  protected def replaceFragment[T <: Fragment](
+    fragment: T,
+    arguments: Option[Bundle] = None,
+    containerResourceId: Int = R.id.fragment_container
+  ): FragmentTransaction =
+    fragmentTransaction(fragment, arguments).
+      replace(containerResourceId, fragment)
+
+  protected def fragmentTransaction[T <: Fragment](
+    fragment: T,
+    arguments: Option[Bundle] = None
   ): FragmentTransaction = {
     arguments.map(a => fragment.setArguments(a))
-    getFragmentManager.beginTransaction.
-      add(containerResourceId, fragment)
+    getFragmentManager.beginTransaction
   }
 }

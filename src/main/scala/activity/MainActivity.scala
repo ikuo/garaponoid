@@ -13,12 +13,9 @@ class MainActivity extends BaseActivity with TvServiceClient {
     getActionBar.show
     startService[TvService]
 
-    super.onCreate(bundle, Some(R.layout.main), false)
+    super.onCreate(bundle, Some(R.layout.fragment_container), false)
 
-    tvService.run { tv =>
-      if (tv.isSignedIn) refreshSession
-      else promptSignIn("")
-    }
+    refreshSessionOrPromptSignIn
   }
 
   override def onDestroy: Unit = {
@@ -28,6 +25,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
 
   override def onCreateOptionsMenu(menu: Menu) = {
     getMenuInflater.inflate(R.menu.main_activity_actions, menu)
+    updateOptionsMenuVisibility(menu)
 
     menu.findItem(R.id.action_search).
       getActionView.asInstanceOf[SearchView].
@@ -38,10 +36,23 @@ class MainActivity extends BaseActivity with TvServiceClient {
 
   override def onOptionsItemSelected(item: MenuItem) = {
     item.getItemId match {
+      case R.id.action_sign_in => promptSignIn()
       case R.id.action_sign_out => signOut
       case R.id.action_about => startActivity(SIntent[AboutActivity])
       case _ => ()
     }
     super.onOptionsItemSelected(item)
+  }
+
+  override def onPrepareOptionsMenu(menu: Menu): Boolean = {
+    updateOptionsMenuVisibility(menu)
+    super.onPrepareOptionsMenu(menu)
+  }
+
+  private def updateOptionsMenuVisibility(menu: Menu): Unit = {
+    tvService { tv =>
+      menu.findItem(R.id.action_sign_out).setVisible(tv.isSignedIn)
+      menu.findItem(R.id.action_sign_in).setVisible(!tv.isSignedIn)
+    }
   }
 }

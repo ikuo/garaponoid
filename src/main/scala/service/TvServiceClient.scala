@@ -5,18 +5,33 @@ import ExecutionContext.Implicits.global
 import org.scaloid.common._
 import com.github.ikuo.garapon4s._
 
-trait TvServiceClient extends SActivity {
+trait TvServiceClient extends BaseActivity {
   val tvService = new LocalServiceConnection[TvService]
 
-  protected def promptSignIn(userName: String) =
+  def promptSignIn(userName: String = "") =
     new SignInDialog(userName, signIn, this).show
 
-  protected def signOut {
+  protected def signOut: Unit = {
     new AlertDialogBuilder(null, R.string.confirm_sign_out) {
-      positiveButton(android.R.string.ok, tvService.run(_.signOut))
+      positiveButton(android.R.string.ok, {
+        tvService.run(_.signOut)
+        showSignInFragment
+      })
       negativeButton(android.R.string.cancel)
     }.show
   }
+
+  protected def refreshSessionOrPromptSignIn: Unit = tvService.run { tv =>
+    if (tv.isSignedIn) {
+      refreshSession
+    } else {
+      showSignInFragment
+      promptSignIn()
+    }
+  }
+
+  private def showSignInFragment: Unit =
+    replaceFragment(new SignInFragment).commit
 
   private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
@@ -30,8 +45,9 @@ trait TvServiceClient extends SActivity {
     future {
       try {
         tv.refreshSession
-        info(s"tvSession empty == ${tv.session.isEmpty}")
-      } catch {
+        replaceFragment(new MainFragment).commit
+      }
+      catch {
         case e: UnknownUser => {
           new AlertDialogBuilder(null, R.string.unknown_user) {
             positiveButton(android.R.string.ok, promptSignIn(tv.loginId))

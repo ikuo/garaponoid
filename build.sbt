@@ -5,13 +5,13 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
-version := "0.2.1"
+version := "0.2.2-SNAPSHOT"
 
 scalaVersion := "2.10.3"
 
 versionName in Android := Some(version.value)
 
-versionCode in Android := Some(3)
+versionCode in Android := Some(4)
 
 targetSdkVersion in Android := 19
 
@@ -25,7 +25,7 @@ scalacOptions in Compile ++=
 
 useProguard in Android := true
 
-proguardOptions in Android += "@project/proguard.cfg"
+proguardOptions in Android += "@proguard-project.txt"
 
 proguardCache in Android ++= Seq(
   ProguardCache("scaloid") % "org.scaloid" %% "scaloid",

@@ -13,12 +13,9 @@ class MainActivity extends BaseActivity with TvServiceClient {
     getActionBar.show
     startService[TvService]
 
-    super.onCreate(bundle, Some(R.layout.main), false)
+    super.onCreate(bundle, Some(R.layout.fragment_container), false)
 
-    tvService.run { tv =>
-      if (tv.isSignedIn) refreshSession
-      else promptSignIn("")
-    }
+    refreshSessionOrPromptSignIn
   }
 
   override def onDestroy: Unit = {
@@ -39,7 +36,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
 
   override def onOptionsItemSelected(item: MenuItem) = {
     item.getItemId match {
-      case R.id.action_sign_in => promptSignIn("")
+      case R.id.action_sign_in => promptSignIn()
       case R.id.action_sign_out => signOut
       case R.id.action_about => startActivity(SIntent[AboutActivity])
       case _ => ()

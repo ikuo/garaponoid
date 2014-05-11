@@ -4,8 +4,9 @@
   <string name="action_search">Search programs</string>
   <string name="action_preferences">Preferences</string>
   <string name="sign_in">Sign in</string>
+  <string name="sign_in_to_garapon_tv">Sign in to Garapon TV</string>
   <string name="sign_out">Sign out</string>
-  <string name="search_hint">Program name etc.</string>
+  <string name="search_hint">Search programs</string>
   <string name="unknown_user">Unknown user</string>
   <string name="wrong_password">Wrong password</string>
   <string name="confirm_sign_out">Sign out ?</string>

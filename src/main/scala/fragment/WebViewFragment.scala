@@ -15,7 +15,6 @@ class WebViewFragment extends BaseFragment[Activity] {
     savedInstanceState: Bundle
   ): View = {
     val view = new WebView(getActivity)
-    info("onCreateView")
     Option(getArguments.getString("url")).map { url => view.loadUrl(url) }
     view
   }

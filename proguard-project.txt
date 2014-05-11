@@ -1,20 +1,48 @@
-# To enable ProGuard in your project, edit project.properties
-# to define the proguard.config property as described in that file.
-#
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in ${sdk.dir}/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the ProGuard
-# include property in project.properties.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-dontobfuscate
 
-# Add any project specific keep options here:
+-keepclassmembernames class scala.concurrent.forkjoin.ForkJoinPool {
+    long ctl;
+    long stealCount;
+    int  plock;
+    int  indexSeed;
+}
+-keepclassmembers class * {
+    ** parkBlocker;
+}
+-keepclassmembers class scala.concurrent.forkjoin.ForkJoinPool$WorkQueue {
+    int qlock;
+}
+-keepclassmembernames class scala.concurrent.forkjoin.ForkJoinTask {
+    int status;
+}
+-keepclassmembernames class scala.concurrent.forkjoin.LinkedTransferQueue {
+    scala.concurrent.forkjoin.LinkedTransferQueue$Node head;
+    scala.concurrent.forkjoin.LinkedTransferQueue$Node tail;
+    int sweepVotes;
+}
+-keepclassmembernames class scala.concurrent.forkjoin.LinkedTransferQueue$Node {
+    java.lang.Object item;
+    scala.concurrent.forkjoin.LinkedTransferQueue$Node next;
+    java.lang.Thread waiter;
+}
+-keep class scala.reflect.ScalaSignature { *; }
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keep class com.fasterxml.jackson.databind.** { *; }
+-keep class com.fasterxml.jackson.annotation.** { *; }
+
+-keep public class com.github.ikuo.garapon4s.model.** {
+  public void set*(***);
+  public *** get*();
+}
+
+-dontnote com.fasterxml.jackson.core.**
+-dontnote com.fasterxml.jackson.databind.**
+
+-dontwarn it.gmariotti.cardslib.library.view.CardGridView$*
+-dontwarn org.slf4j.impl.**
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
+
+-keepattributes *Annotation*,EnclosingMethod
+
+-keep class **.R$*
+-keep class **.R$raw

@@ -13,7 +13,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
     getActionBar.show
     startService[TvService]
 
-    super.onCreate(bundle, Some(R.layout.main))
+    super.onCreate(bundle, Some(R.layout.main), false)
 
     tvService.run { tv =>
       if (tv.isSignedIn) refreshSession

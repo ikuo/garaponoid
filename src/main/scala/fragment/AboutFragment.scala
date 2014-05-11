@@ -2,14 +2,14 @@ package com.github.ikuo.garaponoid
 
 import android.os.Bundle
 import android.os.Build.VERSION
-import android.app.{Activity, Fragment}
 import android.view.{View, ViewGroup, LayoutInflater}
 import android.widget.TextView
 import android.text.Html
 import org.scaloid.common._
 import TypedResource._
+import AboutFragment._
 
-class AboutFragment extends Fragment {
+class AboutFragment extends BaseFragment[HostActivity] {
   lazy val versionName = packageInfo.versionName
   lazy val versionCode = packageInfo.versionCode
   lazy val packageInfo = {
@@ -26,10 +26,17 @@ class AboutFragment extends Fragment {
     implicit val view = inflater.inflate(R.layout.about_view, container, false)
     textView(TR.version_name).text(versionName)
     textView(TR.version_code).text(s"(#${versionCode})")
-    textView(TR.license).setText(Html.fromHtml(getString(R.string.open_source_license)))
+    textView(TR.license).text(Html.fromHtml(getString(R.string.open_source_license)))
+    textView(TR.license).onClick(hostActivity.showOpenSourceLicense)
     view
   }
 
   private def textView(id: TypedResource[TextView])(implicit view: View) =
     view.findView[TextView](id)
+}
+
+object AboutFragment {
+  trait HostActivity {
+    def showOpenSourceLicense: Unit
+  }
 }

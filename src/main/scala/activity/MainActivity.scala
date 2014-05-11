@@ -23,6 +23,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
 
   override def onDestroy: Unit = {
     stopService[TvService]
+    super.onDestroy
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {

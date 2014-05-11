@@ -48,8 +48,10 @@ abstract class BaseActivity extends SActivity with TypedActivity {
     containerResourceId: Int = R.id.fragment_container
   ): T = {
     arguments.map(a => fragment.setArguments(a))
+    info(s"showFragment for resource ID ${containerResourceId}")
     getFragmentManager.beginTransaction.
       add(containerResourceId, fragment).
+      addToBackStack(null).
       commit
     fragment
   }

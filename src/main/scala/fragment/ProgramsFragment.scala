@@ -29,7 +29,7 @@ class ProgramsFragment extends Fragment {
 
   private def searchResultListener(tvSession: TvSession) =
     new SearchResultListener {
-      override def notifyPrograms(programs: Iterator[Program]) {
+      override def notifyPrograms(programs: Iterator[Program]): Unit = {
         while (programs.hasNext) {
           val program = programs.next
           info(program.title)
@@ -39,14 +39,14 @@ class ProgramsFragment extends Fragment {
       }
     }
 
-  override def onCreate(savedInstanceState: Bundle) {
+  override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
     cards
     cardsAdapter
     runQuery
   }
 
-  private def addCard(program: Program, tvSession: TvSession) {
+  private def addCard(program: Program, tvSession: TvSession): Unit = {
     implicit val context: Context = getActivity
     val card = new ProgramCard
 
@@ -87,7 +87,7 @@ class ProgramsFragment extends Fragment {
     super.onAttach(activity)
   }
 
-  private def runQuery {
+  private def runQuery: Unit = {
     implicit val ctx = getActivity
     val query = getArguments.getString("query")
     if (isEmpty(query)) { info("empty query"); return }
@@ -110,7 +110,7 @@ class ProgramsFragment extends Fragment {
   private def spinnerVisible(value: Boolean) =
     runOnUiThread(getActivity.setProgressBarIndeterminateVisibility(value))
 
-  private def runQuery(query: String, tvSession: TvSession) {
+  private def runQuery(query: String, tvSession: TvSession): Unit = {
     val results =
       tvSession.search(
         key = query,

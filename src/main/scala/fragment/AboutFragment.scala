@@ -10,6 +10,7 @@ import TypedResource._
 import AboutFragment._
 
 class AboutFragment extends BaseFragment[HostActivity] {
+  implicit val loggerTag = LoggerTag("AboutFragment")
   lazy val versionName = packageInfo.versionName
   lazy val versionCode = packageInfo.versionCode
   lazy val packageInfo = {

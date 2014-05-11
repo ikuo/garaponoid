@@ -22,8 +22,8 @@ class ProgramsActivity extends BaseActivity with TvServiceClient {
 
   private def handleIntent(intent: Intent) {
     if (intent.getAction == Intent.ACTION_SEARCH) {
-      val query = intent.getStringExtra(SearchManager.QUERY);
-      val arguments = (new Bundle).tap(_.putString("query", query))
+      val query = new Query(key = intent.getStringExtra(SearchManager.QUERY))
+      val arguments = (new Bundle).tap(_.putParcelable("query", query))
       showFragment(new ProgramsFragment, Some(arguments)).commit
     }
   }

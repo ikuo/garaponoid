@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+>
+  <FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/sign_in_view"
+    android:visibility="gone"
+  >
+    <Button
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/button_sign_in"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/sign_in_to_garapon_tv"
+      android:layout_gravity="center"
+      android:padding="20dp"
+    />
+  </FrameLayout>
+
+  <LinearLayout
+    android:id="@+id/main_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+  >
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/new_programs"
+    />
+    <FrameLayout android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+      android:id="@+id/fragment_container_new_programs"
+    />
+  </LinearLayout>
+</LinearLayout>

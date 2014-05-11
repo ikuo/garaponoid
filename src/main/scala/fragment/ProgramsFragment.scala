@@ -3,7 +3,7 @@ package com.github.ikuo.garaponoid
 import java.util.ArrayList
 import android.app.{Activity, Fragment}
 import android.content.Context
-import android.os.Bundle
+import android.os.{Parcelable, Bundle}
 import android.view.{LayoutInflater, ViewGroup, View}
 import android.text.TextUtils._
 import scala.concurrent._
@@ -17,7 +17,7 @@ import com.github.ikuo.garapon4s.TvSession
 import com.github.ikuo.garapon4s.model.{Program, SearchResultListener}
 import Tapper.Implicits._
 
-class ProgramsFragment extends Fragment {
+class ProgramsFragment extends BaseFragment[TvServiceClient] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
   lazy val cards = new ArrayList[Card]()
@@ -34,7 +34,6 @@ class ProgramsFragment extends Fragment {
           val program = programs.next
           info(program.title)
           addCard(program, tvSession)
-          runOnUiThread(cardsAdapter.notifyDataSetChanged)
         }
       }
     }
@@ -66,7 +65,8 @@ class ProgramsFragment extends Fragment {
         openUri(tvSession.webViewerUrl(program.gtvId))
     })
 
-    runOnUiThread(cards.add(card))
+    runOnUiThread(cardsAdapter.add(card))
+    runOnUiThread(cardsAdapter.notifyDataSetChanged)
   }
 
   override def onCreateView(
@@ -80,17 +80,9 @@ class ProgramsFragment extends Fragment {
     view
   }
 
-  override def onAttach(activity: Activity) {
-    if (!activity.isInstanceOf[TvServiceClient]) {
-      throw new ClassCastException("activity must be a TvServiceClient")
-    }
-    super.onAttach(activity)
-  }
-
   private def runQuery: Unit = {
     implicit val ctx = getActivity
-    val query = getArguments.getString("query")
-    if (isEmpty(query)) { info("empty query"); return }
+    val query = getArguments.getParcelable("query").asInstanceOf[Query]
     info(s"runQuery: ${query}")
 
     tvService.run { tv =>
@@ -110,11 +102,11 @@ class ProgramsFragment extends Fragment {
   private def spinnerVisible(value: Boolean) =
     runOnUiThread(getActivity.setProgressBarIndeterminateVisibility(value))
 
-  private def runQuery(query: String, tvSession: TvSession): Unit = {
+  private def runQuery(query: Query, tvSession: TvSession): Unit = {
     val results =
       tvSession.search(
-        key = query,
-        n = 40,
+        key = query.key,
+        n = query.perPage.getOrElse(40),
         resultListener = searchResultListener(tvSession)
       )
     info(s"num results = ${results.hit}")

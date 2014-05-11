@@ -5,13 +5,13 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
-version := "0.2.2"
+version := "0.2.3-SNAPSHOT"
 
 scalaVersion := "2.10.3"
 
 versionName in Android := Some(version.value)
 
-versionCode in Android := Some(6)
+versionCode in Android := Some(7)
 
 targetSdkVersion in Android := 19
 
@@ -28,9 +28,9 @@ useProguard in Android := true
 proguardOptions in Android += "@proguard-project.txt"
 
 proguardCache in Android ++= Seq(
-  ProguardCache("scaloid") % "org.scaloid" %% "scaloid",
-  ProguardCache("garapon4s") % "com.github.ikuo" % "garapon4s_2.10",
-  ProguardCache("cardslib") % "com.github.gabrielemariotti.cards" % "library"
+  ProguardCache("org.scaloid"),
+  ProguardCache("com.github.ikuo.garapon4s"),
+  ProguardCache("it.gmariotti.cardslib")
 )
 
 apkbuildExcludes in Android ++= Seq(

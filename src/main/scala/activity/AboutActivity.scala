@@ -16,7 +16,6 @@ class AboutActivity extends BaseActivity with AboutFragment.HostActivity {
     val arguments =
       (new Bundle).
         tap(_.putString("url", "file:///android_res/raw/notice.html"))
-    info("showOpenSourceLicense")
     showFragment(new WebViewFragment, Some(arguments)).
       addToBackStack(null).commit
   }

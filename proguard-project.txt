@@ -27,7 +27,6 @@
 }
 -keep class scala.reflect.ScalaSignature { *; }
 
-# Jackson
 -keep class com.fasterxml.jackson.databind.** { *; }
 -keep class com.fasterxml.jackson.annotation.** { *; }
 
@@ -46,4 +45,4 @@
 -keepattributes *Annotation*,EnclosingMethod
 
 -keep class **.R$*
--keepclassmembers class **.R$raw
+-keep class **.R$raw

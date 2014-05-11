@@ -31,7 +31,7 @@ trait TvServiceClient extends BaseActivity {
   }
 
   private def showSignInFragment: Unit =
-    showFragment(new SignInFragment).commit
+    replaceFragment(new SignInFragment).commit
 
   private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
@@ -43,7 +43,10 @@ trait TvServiceClient extends BaseActivity {
   protected def refreshSession = tvService.run { tv =>
     info("refreshSession")
     future {
-      try { tv.refreshSession }
+      try {
+        tv.refreshSession
+        replaceFragment(new MainFragment).commit
+      }
       catch {
         case e: UnknownUser => {
           new AlertDialogBuilder(null, R.string.unknown_user) {

@@ -8,7 +8,7 @@ class AboutActivity extends BaseActivity with AboutFragment.HostActivity {
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
     if (savedInstanceState == null) {
-      showFragment(new AboutFragment)
+      showFragment(new AboutFragment).commit
     }
   }
 
@@ -17,6 +17,7 @@ class AboutActivity extends BaseActivity with AboutFragment.HostActivity {
       (new Bundle).
         tap(_.putString("url", "file:///android_res/raw/notice.html"))
     info("showOpenSourceLicense")
-    showFragment(new WebViewFragment, Some(arguments))
+    showFragment(new WebViewFragment, Some(arguments)).
+      addToBackStack(null).commit
   }
 }

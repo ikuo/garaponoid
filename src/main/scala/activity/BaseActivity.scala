@@ -1,7 +1,7 @@
 package com.github.ikuo.garaponoid
 
 import org.scaloid.common._
-import android.app.{Activity, Fragment}
+import android.app.{Activity, Fragment, FragmentTransaction}
 import android.os.Bundle
 import android.view.MenuItem
 import TypedResource._
@@ -46,13 +46,9 @@ abstract class BaseActivity extends SActivity with TypedActivity {
     fragment: T,
     arguments: Option[Bundle] = None,
     containerResourceId: Int = R.id.fragment_container
-  ): T = {
+  ): FragmentTransaction = {
     arguments.map(a => fragment.setArguments(a))
-    info(s"showFragment for resource ID ${containerResourceId}")
     getFragmentManager.beginTransaction.
-      add(containerResourceId, fragment).
-      addToBackStack(null).
-      commit
-    fragment
+      add(containerResourceId, fragment)
   }
 }

@@ -1,6 +1,7 @@
 package com.github.ikuo.garaponoid
 
 import scala.concurrent._
+import android.view.View
 import ExecutionContext.Implicits.global
 import org.scaloid.common._
 import com.github.ikuo.garapon4s._
@@ -15,7 +16,7 @@ trait TvServiceClient extends BaseActivity {
     new AlertDialogBuilder(null, R.string.confirm_sign_out) {
       positiveButton(android.R.string.ok, {
         tvService.run(_.signOut)
-        showSignInFragment
+        showSignInPane
       })
       negativeButton(android.R.string.cancel)
     }.show
@@ -25,13 +26,21 @@ trait TvServiceClient extends BaseActivity {
     if (tv.isSignedIn) {
       refreshSession
     } else {
-      showSignInFragment
+      showSignInPane
       promptSignIn()
     }
+    findView(TR.button_sign_in).onClick(promptSignIn())
   }
 
-  private def showSignInFragment: Unit =
-    replaceFragment(new SignInFragment).commit
+  private def showSignInPane: Unit = runOnUiThread {
+    findView(TR.main_view).setVisibility(View.GONE)
+    findView(TR.sign_in_view).setVisibility(View.VISIBLE)
+  }
+
+  private def showMainPane: Unit = runOnUiThread {
+    findView(TR.sign_in_view).visibility(View.GONE)
+    findView(TR.main_view).visibility(View.VISIBLE)
+  }
 
   private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
@@ -45,7 +54,7 @@ trait TvServiceClient extends BaseActivity {
     future {
       try {
         tv.refreshSession
-        replaceFragment(new MainFragment).commit
+        showMainPane
       }
       catch {
         case e: UnknownUser => {

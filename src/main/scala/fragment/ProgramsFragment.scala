@@ -17,7 +17,7 @@ import com.github.ikuo.garapon4s.TvSession
 import com.github.ikuo.garapon4s.model.{Program, SearchResultListener}
 import Tapper.Implicits._
 
-class ProgramsFragment extends Fragment {
+class ProgramsFragment extends BaseFragment[TvServiceClient] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
   lazy val cards = new ArrayList[Card]()
@@ -34,7 +34,6 @@ class ProgramsFragment extends Fragment {
           val program = programs.next
           info(program.title)
           addCard(program, tvSession)
-          runOnUiThread(cardsAdapter.notifyDataSetChanged)
         }
       }
     }
@@ -66,7 +65,8 @@ class ProgramsFragment extends Fragment {
         openUri(tvSession.webViewerUrl(program.gtvId))
     })
 
-    runOnUiThread(cards.add(card))
+    runOnUiThread(cardsAdapter.add(card))
+    runOnUiThread(cardsAdapter.notifyDataSetChanged)
   }
 
   override def onCreateView(
@@ -78,13 +78,6 @@ class ProgramsFragment extends Fragment {
     view.findViewById(R.id.program_cards).asInstanceOf[CardListView].
       setAdapter(cardsAdapter)
     view
-  }
-
-  override def onAttach(activity: Activity) {
-    if (!activity.isInstanceOf[TvServiceClient]) {
-      throw new ClassCastException("activity must be a TvServiceClient")
-    }
-    super.onAttach(activity)
   }
 
   private def runQuery: Unit = {

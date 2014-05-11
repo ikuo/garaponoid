@@ -1,10 +1,12 @@
 package com.github.ikuo.garaponoid
 
 import scala.concurrent._
+import android.os.Bundle
 import android.view.View
 import ExecutionContext.Implicits.global
 import org.scaloid.common._
 import com.github.ikuo.garapon4s._
+import Tapper.Implicits._
 
 trait TvServiceClient extends BaseActivity {
   val tvService = new LocalServiceConnection[TvService]
@@ -40,6 +42,15 @@ trait TvServiceClient extends BaseActivity {
   private def showMainPane: Unit = runOnUiThread {
     findView(TR.sign_in_view).visibility(View.GONE)
     findView(TR.main_view).visibility(View.VISIBLE)
+
+    val arguments = (new Bundle).
+      tap(_.putParcelable("query", new Query(perPage = Some(5))))
+
+    replaceFragment(
+      new ProgramsFragment,
+      Some(arguments),
+      R.id.fragment_container_new_programs
+    ).commit
   }
 
   private def signIn(loginId: String, md5Password: String): Unit =

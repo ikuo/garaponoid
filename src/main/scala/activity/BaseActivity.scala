@@ -7,7 +7,8 @@ import android.view.MenuItem
 import TypedResource._
 import Tapper.Implicits._
 
-abstract class BaseActivity extends SActivity with TypedActivity {
+abstract class BaseActivity
+  extends SActivity with TypedActivity with ErrorHandling {
   def onCreate(
     savedInstanceState: Bundle,
     layoutResourceId: Option[Int] = None,
@@ -29,17 +30,6 @@ abstract class BaseActivity extends SActivity with TypedActivity {
       case _ => ()
     }
     super.onOptionsItemSelected(item)
-  }
-
-  protected def setErrorHandler: Unit = {
-    Thread.setDefaultUncaughtExceptionHandler(
-      new Thread.UncaughtExceptionHandler {
-        override def uncaughtException(thread: Thread, throwable: Throwable) {
-          error(throwable.getMessage)
-          error(throwable.getStackTrace.mkString("\n"))
-        }
-      }
-    )
   }
 
   protected def showFragment[T <: Fragment](

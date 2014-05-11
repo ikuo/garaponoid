@@ -2,7 +2,7 @@ package com.github.ikuo.garaponoid
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.{Menu, MenuItem}
+import android.view.{Menu, MenuItem, Window}
 import android.widget.SearchView
 import TypedResource._
 import org.scaloid.common._
@@ -10,9 +10,10 @@ import Tapper.Implicits._
 
 class MainActivity extends BaseActivity with TvServiceClient {
   override def onCreate(bundle: Bundle): Unit = {
-    getActionBar.show
+    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     startService[TvService]
 
+    getActionBar.show
     super.onCreate(bundle, Some(R.layout.main), false)
 
     refreshSessionOrPromptSignIn

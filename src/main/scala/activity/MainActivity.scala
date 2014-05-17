@@ -8,7 +8,7 @@ import TypedResource._
 import org.scaloid.common._
 import Tapper.Implicits._
 
-class MainActivity extends BaseActivity with TvServiceClient {
+class MainActivity extends BaseActivity with ProgramsFragment.HostActivity {
   override def onCreate(bundle: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     startService[TvService]
@@ -56,4 +56,7 @@ class MainActivity extends BaseActivity with TvServiceClient {
       menu.findItem(R.id.action_sign_in).setVisible(!tv.isSignedIn)
     }
   }
+
+  override def onStartQuery = spinnerVisible(true)
+  override def onFinishQuery = spinnerVisible(false)
 }

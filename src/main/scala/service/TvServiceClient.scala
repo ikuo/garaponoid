@@ -47,7 +47,7 @@ trait TvServiceClient extends BaseActivity {
       tap(_.putParcelable("query", new Query(perPage = Some(5))))
 
     replaceFragment(
-      new ProgramsFragment,
+      new ScrollableProgramsFragment, // new FixedProgramsFragment,
       Some(arguments),
       R.id.fragment_container_new_programs
     ).commit
@@ -65,7 +65,7 @@ trait TvServiceClient extends BaseActivity {
     future {
       try {
         tv.refreshSession
-        showMainPane
+        showMainPane  // new programs etc.
       }
       catch {
         case e: UnknownUser => {

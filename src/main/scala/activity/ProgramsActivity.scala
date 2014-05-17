@@ -8,9 +8,7 @@ import android.content.Intent
 import org.scaloid.common._
 import Tapper.Implicits._
 
-class ProgramsActivity extends BaseActivity with TvServiceClient {
-  val fragmentTag = "programs_fragment"
-
+class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
   override def onCreate(savedInstanceState: Bundle) {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
@@ -24,9 +22,12 @@ class ProgramsActivity extends BaseActivity with TvServiceClient {
     if (intent.getAction == Intent.ACTION_SEARCH) {
       val query = new Query(key = intent.getStringExtra(SearchManager.QUERY))
       val arguments = (new Bundle).tap(_.putParcelable("query", query))
-      showFragment(new ProgramsFragment, Some(arguments)).commit
+      showFragment(new ScrollableProgramsFragment, Some(arguments)).commit
     }
   }
+
+  override def onStartQuery = spinnerVisible(true)
+  override def onFinishQuery = spinnerVisible(false)
 }
 
 object ProgramsActivity {

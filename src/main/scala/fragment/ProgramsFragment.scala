@@ -16,15 +16,15 @@ import it.gmariotti.cardslib.library.view.{CardListView}
 import com.github.ikuo.garapon4s.TvSession
 import com.github.ikuo.garapon4s.model.{Program, SearchResultListener}
 import Tapper.Implicits._
+import ProgramsFragment._
 
-class ProgramsFragment extends BaseFragment[TvServiceClient] {
+trait ProgramsFragment extends BaseFragment[HostActivity] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
   lazy val cards = new ArrayList[Card]()
-  lazy val cardsAdapter = new CardArrayAdapter(context, cards)
 
-  private def context: Context = getActivity
-  private def tvService =
+  protected def context: Context = getActivity
+  protected def tvService =
     getActivity.asInstanceOf[TvServiceClient].tvService
 
   private def searchResultListener(tvSession: TvSession) =
@@ -41,7 +41,6 @@ class ProgramsFragment extends BaseFragment[TvServiceClient] {
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
     cards
-    cardsAdapter
     runQuery
   }
 
@@ -65,20 +64,10 @@ class ProgramsFragment extends BaseFragment[TvServiceClient] {
         openUri(tvSession.webViewerUrl(program.gtvId))
     })
 
-    runOnUiThread(cardsAdapter.add(card))
-    runOnUiThread(cardsAdapter.notifyDataSetChanged)
+    addCard(card)
   }
 
-  override def onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup,
-    savedInstanceState: Bundle
-  ): View = {
-    val view = inflater.inflate(R.layout.programs_view, container, false)
-    view.findViewById(R.id.program_cards).asInstanceOf[CardListView].
-      setAdapter(cardsAdapter)
-    view
-  }
+  protected def addCard(card: ProgramCard)
 
   private def runQuery: Unit = {
     implicit val ctx = getActivity
@@ -87,20 +76,17 @@ class ProgramsFragment extends BaseFragment[TvServiceClient] {
 
     tvService.run { tv =>
       if (tv.session.isEmpty) {
-        warn("no session") // TODO refresh session
+        toast("no session") // TODO refresh session
       } else {
         future {
-          spinnerVisible(true)
+          hostActivity.onStartQuery
           runQuery(query, tv.session.get)
         }.onComplete {
-          case _ => spinnerVisible(false)
+          case _ => hostActivity.onFinishQuery
         }
       }
     }
   }
-
-  private def spinnerVisible(value: Boolean) =
-    runOnUiThread(getActivity.setProgressBarIndeterminateVisibility(value))
 
   private def runQuery(query: Query, tvSession: TvSession): Unit = {
     val results =
@@ -110,5 +96,12 @@ class ProgramsFragment extends BaseFragment[TvServiceClient] {
         resultListener = searchResultListener(tvSession)
       )
     info(s"num results = ${results.hit}")
+  }
+}
+
+object ProgramsFragment {
+  trait HostActivity extends TvServiceClient {
+    def onStartQuery: Unit = ()
+    def onFinishQuery: Unit = ()
   }
 }

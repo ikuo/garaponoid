@@ -55,4 +55,7 @@ abstract class BaseActivity
     arguments.map(a => fragment.setArguments(a))
     getFragmentManager.beginTransaction
   }
+
+  protected def spinnerVisible(value: Boolean) =
+    runOnUiThread(setProgressBarIndeterminateVisibility(value))
 }

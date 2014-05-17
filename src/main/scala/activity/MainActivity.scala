@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.{Menu, MenuItem, Window, View}
-import android.widget.{TextView, SearchView}
+import android.widget.TextView
 import TypedResource._
 import org.scaloid.common._
 import Tapper.Implicits._
@@ -28,10 +28,7 @@ class MainActivity extends BaseActivity with ProgramsFragment.HostActivity {
   override def onCreateOptionsMenu(menu: Menu) = {
     getMenuInflater.inflate(R.menu.main_activity_actions, menu)
     updateOptionsMenuVisibility(menu)
-
-    menu.findItem(R.id.action_search).
-      getActionView.asInstanceOf[SearchView].
-      setSearchableInfo(ProgramsActivity.searchableInfo)
+    activateProgramsSearchOnActionBar(menu)
 
     super.onCreateOptionsMenu(menu)
   }

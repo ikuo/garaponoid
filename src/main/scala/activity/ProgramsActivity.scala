@@ -27,9 +27,16 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
           case Some(q) => q.asInstanceOf[Query]
         }
       val arguments = (new Bundle).tap(_.putParcelable("query", query))
-      showFragment(new ScrollableProgramsFragment, Some(arguments)).commit
+      replaceFragment(new ScrollableProgramsFragment, Some(arguments)).commit
     }
     setIntent(null)
+  }
+
+  override def onCreateOptionsMenu(menu: Menu) = {
+    getMenuInflater.inflate(R.menu.programs_activity_actions, menu)
+    activateProgramsSearchOnActionBar(menu)
+
+    super.onCreateOptionsMenu(menu)
   }
 
   override def onStartQuery = spinnerVisible(true)

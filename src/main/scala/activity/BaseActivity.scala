@@ -4,6 +4,8 @@ import org.scaloid.common._
 import android.app.{Activity, Fragment, FragmentTransaction}
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.SearchView
+import android.view.Menu
 import TypedResource._
 import Tapper.Implicits._
 
@@ -58,4 +60,10 @@ abstract class BaseActivity
 
   protected def spinnerVisible(value: Boolean) =
     runOnUiThread(setProgressBarIndeterminateVisibility(value))
+
+  protected def activateProgramsSearchOnActionBar(menu: Menu): Unit = {
+    menu.findItem(R.id.action_search).
+      getActionView.asInstanceOf[SearchView].
+      setSearchableInfo(ProgramsActivity.searchableInfo)
+  }
 }

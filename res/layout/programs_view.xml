@@ -5,6 +5,5 @@
   android:id="@+id/program_cards"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="12dp"
   card:list_card_layout_resourceID="@layout/list_card_thumbnail_layout"
 />

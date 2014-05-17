@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="@string/new_programs"
         android:padding="15dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="0dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
       />
       <FrameLayout android:layout_width="fill_parent"

@@ -9,15 +9,14 @@ import org.scaloid.common._
 import Tapper.Implicits._
 
 class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
-  override def onCreate(savedInstanceState: Bundle) {
+  override def onCreate(savedInstanceState: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
     handleIntent(getIntent)
   }
 
-  override def onNewIntent(intent: Intent): Unit = {
+  override def onNewIntent(intent: Intent): Unit =
     handleIntent(intent)
-  }
 
   private def handleIntent(intent: Intent): Unit = {
     if (intent == null) return ()

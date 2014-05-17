@@ -4,6 +4,6 @@
   xmlns:card="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="12dp"
+  style="@style/list_card.thumbnail"
   card:card_layout_resourceID="@layout/card_thumbnail_layout"
 />

@@ -89,6 +89,9 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   }
 
   private def runQuery(query: Query, tvSession: TvSession): Unit = {
+    Option[String](query.key).map(
+      ProgramsSearchSuggestions.saveRecentQuery(getActivity, _))
+
     val results =
       tvSession.search(
         key = query.key,

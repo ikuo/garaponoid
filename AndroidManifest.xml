@@ -16,6 +16,12 @@
       android:enabled="true"
       android:name=".TvService" />
 
+    <provider
+      android:authorities="com.github.ikuo.garaponoid"
+      android:name="ProgramsSearchSuggestions"
+      android:syncable="false"
+    />
+
     <activity android:label="@string/app_name" android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

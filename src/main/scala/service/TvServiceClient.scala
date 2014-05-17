@@ -39,19 +39,7 @@ trait TvServiceClient extends BaseActivity {
     findView(TR.sign_in_view).setVisibility(View.VISIBLE)
   }
 
-  private def showMainPane: Unit = runOnUiThread {
-    findView(TR.sign_in_view).visibility(View.GONE)
-    findView(TR.main_view).visibility(View.VISIBLE)
-
-    val arguments = (new Bundle).
-      tap(_.putParcelable("query", new Query(perPage = Some(5))))
-
-    replaceFragment(
-      new ProgramsFragment,
-      Some(arguments),
-      R.id.fragment_container_new_programs
-    ).commit
-  }
+  protected def showMainPane: Unit = ()
 
   private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
@@ -65,7 +53,7 @@ trait TvServiceClient extends BaseActivity {
     future {
       try {
         tv.refreshSession
-        showMainPane
+        showMainPane  // new programs etc.
       }
       catch {
         case e: UnknownUser => {

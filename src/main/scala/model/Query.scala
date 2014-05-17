@@ -18,6 +18,10 @@ class Query(
     case None => NA
     case Some(v) => v
   }
+
+  override def toString = {
+    s"key: ${key}, perPage: ${perPage}"
+  }
 }
 
 object Query {

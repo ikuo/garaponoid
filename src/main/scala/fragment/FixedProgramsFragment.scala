@@ -14,11 +14,12 @@ class FixedProgramsFragment extends ProgramsFragment {
     inflater: LayoutInflater,
     container: ViewGroup,
     savedInstanceState: Bundle
-  ): View =
+  ): View = {
     inflater.inflate(R.layout.fixed_programs_view, container, false).tap {
       implicit val ctx = getActivity
       _.find[TextView](R.id.see_more).onClick(hostActivity.onSeeMore)
     }
+  }
 
   override def addCard(card: ProgramCard): Unit = {
     val inflater = getActivity.getLayoutInflater

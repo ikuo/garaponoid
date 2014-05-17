@@ -17,7 +17,8 @@ class MainActivity extends BaseActivity with ProgramsFragment.HostActivity {
     getActionBar.show
     super.onCreate(bundle, Some(R.layout.main), false)
 
-    refreshSessionOrPromptSignIn
+    spinnerVisible(false)
+    showSignIn
   }
 
   override def onDestroy: Unit = {

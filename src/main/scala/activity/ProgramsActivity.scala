@@ -12,13 +12,16 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
   override def onCreate(savedInstanceState: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
-    handleIntent(getIntent)
   }
 
-  override def onNewIntent(intent: Intent): Unit =
-    handleIntent(intent)
+  override def onNewIntent(intent: Intent): Unit = consumeIntent(intent)
 
-  private def handleIntent(intent: Intent): Unit = {
+  override def onStart: Unit = {
+    consumeIntent(getIntent)
+    super.onStart
+  }
+
+  private def consumeIntent(intent: Intent): Unit = {
     if (intent == null) return ()
     if (intent.getAction == Intent.ACTION_SEARCH) {
       val query: Query =

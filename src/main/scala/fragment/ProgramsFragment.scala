@@ -62,7 +62,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       override def notifyPrograms(programs: Iterator[Program]): Unit = {
         while (programs.hasNext) {
           val program = programs.next
-          info(program.title)
+          debug(program.title)
           addCard(program, tvSession)
         }
       }
@@ -75,14 +75,14 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 
     tvService.run { tv =>
       if (tv.session.isEmpty) {
-        warn("no session")
-        toast("no session") // TODO refresh session
+        hostActivity.refreshSession
       } else {
         future {
           hostActivity.onStartQuery
           runQuery(query, tv.session.get)
         }.onComplete {
-          case _ => hostActivity.onFinishQuery
+          case _ =>
+            if (hostActivity != null) { hostActivity.onFinishQuery }
         }
       }
     }

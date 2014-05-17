@@ -24,13 +24,8 @@ trait TvServiceClient extends BaseActivity {
     }.show
   }
 
-  protected def refreshSessionOrPromptSignIn: Unit = tvService.run { tv =>
-    if (tv.isSignedIn) {
-      refreshSession
-    } else {
-      showSignInPane
-      promptSignIn()
-    }
+  protected def showSignIn: Unit = tvService.run { tv =>
+    if (!tv.isSignedIn) { showSignInPane }
     findView(TR.button_sign_in).onClick(promptSignIn())
   }
 
@@ -48,7 +43,7 @@ trait TvServiceClient extends BaseActivity {
     }
 
   //TODO show a PopupWindow with indicator
-  protected def refreshSession = tvService.run { tv =>
+  def refreshSession = tvService.run { tv =>
     info("refreshSession")
     future {
       try {

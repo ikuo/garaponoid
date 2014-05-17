@@ -25,7 +25,13 @@ trait TvServiceClient extends BaseActivity {
   }
 
   protected def showSignIn: Unit = tvService.run { tv =>
-    if (!tv.isSignedIn) { showSignInPane }
+    if (tv.isSignedIn) {
+      val mainView = findView(TR.main_view)
+      if (mainView.getVisibility != View.VISIBLE) {
+        showMainPane
+      }
+    } else showSignInPane
+
     findView(TR.button_sign_in).onClick(promptSignIn())
   }
 

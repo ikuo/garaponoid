@@ -9,7 +9,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/sign_in_view"
-    android:visibility="gone"
   >
     <Button
       xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,6 +25,7 @@
     android:id="@+id/main_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:visibility="gone"
   >
     <LinearLayout
       android:layout_width="fill_parent"

@@ -16,4 +16,5 @@
   <string name="default_version_code">(0)</string>
   <string name="open_source_license"><![CDATA[<u>Open Source License</u>]]></string>
   <string name="new_programs">New programs</string>
+  <string name="see_more">More  ></string>
 </resources>

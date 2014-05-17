@@ -23,20 +23,12 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 
   lazy val cards = new ArrayList[Card]()
 
+  protected def addCard(card: ProgramCard)
+
   protected def context: Context = getActivity
+
   protected def tvService =
     getActivity.asInstanceOf[TvServiceClient].tvService
-
-  private def searchResultListener(tvSession: TvSession) =
-    new SearchResultListener {
-      override def notifyPrograms(programs: Iterator[Program]): Unit = {
-        while (programs.hasNext) {
-          val program = programs.next
-          info(program.title)
-          addCard(program, tvSession)
-        }
-      }
-    }
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -51,9 +43,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     card.addCardHeader(
       (new ProgramCardHeader).tap(_.setTitle(program.title))
     )
-
     card.setDescription(program.description)
-
     card.addCardThumbnail(
       (new CardThumbnail(context)).
         tap(_.setUrlResource(tvSession.thumbnailUrl(program.gtvId)))
@@ -67,7 +57,16 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     addCard(card)
   }
 
-  protected def addCard(card: ProgramCard)
+  private def searchResultListener(tvSession: TvSession) =
+    new SearchResultListener {
+      override def notifyPrograms(programs: Iterator[Program]): Unit = {
+        while (programs.hasNext) {
+          val program = programs.next
+          info(program.title)
+          addCard(program, tvSession)
+        }
+      }
+    }
 
   private def runQuery: Unit = {
     implicit val ctx = getActivity
@@ -76,6 +75,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 
     tvService.run { tv =>
       if (tv.session.isEmpty) {
+        warn("no session")
         toast("no session") // TODO refresh session
       } else {
         future {
@@ -100,8 +100,11 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 }
 
 object ProgramsFragment {
+  val query = "com.github.ikuo.garaponoid.programs.query"
+
   trait HostActivity extends TvServiceClient {
     def onStartQuery: Unit = ()
     def onFinishQuery: Unit = ()
+    def onSeeMore: Unit = ()
   }
 }

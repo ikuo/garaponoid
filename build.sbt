@@ -27,11 +27,7 @@ useProguard in Android := true
 
 proguardOptions in Android += "@proguard-project.txt"
 
-proguardCache in Android ++= Seq(
-  ProguardCache("org.scaloid"),
-  ProguardCache("com.github.ikuo.garapon4s"),
-  ProguardCache("it.gmariotti.cardslib")
-)
+proguardCache in Android := Seq.empty
 
 apkbuildExcludes in Android ++= Seq(
   "META-INF/LICENSE",
@@ -64,5 +60,3 @@ cleanProguard := {
   "rm -rf target/scala-2.10/cache/garaponoid/global/proguard_cache".!
   "rm -rf bin/classes.proguard.jar".!
 }
-
-addCommandAlias("restartApp", ";cleanProguard;run")

@@ -2,6 +2,15 @@
 (work in progress) An Android client for Garapon TV.
 
 # Build
+Install a tweaked version (1.2.16-bypasspc) of android-sdk-plugin as follows:
+```
+$ git clone git@github.com:ikuo/android-sdk-plugin.git
+$ cd android-sdk-plugin
+$ git co bypasspc
+$ sbt
+$ sbt publish-local
+```
+
 Create a file `./res/values/key.xml` with the following content:
 
 ```xml
@@ -23,13 +32,6 @@ $ sbt
 When using other build tool, local.properties may be required:
 ```
 cp local.properties.sample local.properties
-```
-
-## Build utility
-To restart app from proguard process, use `restartApp` task:
-
-```
-sbt> restartApp
 ```
 
 # Coding Style

@@ -17,11 +17,15 @@ class FixedProgramsFragment extends ProgramsFragment {
     inflater.inflate(R.layout.fixed_programs_view, container, false)
 
   override def addCard(card: ProgramCard): Unit = {
-    val cardView = new CardView(getActivity).tap(_.setCard(card))
+    val inflater = getActivity.getLayoutInflater
     val lp = new ViewGroup.LayoutParams(wc, wc)
+    val parent = getView.asInstanceOf[ViewGroup]
 
     runOnUiThread {
-      getView.asInstanceOf[ViewGroup].addView(cardView, lp)
+      val cardView = inflater.inflate(R.layout.fixed_program_card, parent, false).
+        asInstanceOf[CardView].
+        tap(_.setCard(card))
+      parent.addView(cardView, lp)
     }
   }
 }

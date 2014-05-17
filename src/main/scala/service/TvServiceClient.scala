@@ -47,7 +47,7 @@ trait TvServiceClient extends BaseActivity {
       tap(_.putParcelable("query", new Query(perPage = Some(5))))
 
     replaceFragment(
-      new ScrollableProgramsFragment, // new FixedProgramsFragment,
+      new FixedProgramsFragment,
       Some(arguments),
       R.id.fragment_container_new_programs
     ).commit

@@ -8,6 +8,10 @@ import it.gmariotti.cardslib.library.internal.{
 import it.gmariotti.cardslib.library.view.{CardListView}
 import org.scaloid.common._
 
+/**
+ * Scrollable fragment of programs.
+ * Do not place it under another scrollable view e.g. ScrollView.
+ */
 class ScrollableProgramsFragment extends ProgramsFragment {
   lazy val cardsAdapter = new CardArrayAdapter(context, cards)
 

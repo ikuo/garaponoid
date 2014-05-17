@@ -22,20 +22,25 @@
     />
   </FrameLayout>
 
-  <LinearLayout
+  <ScrollView
     android:id="@+id/main_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
   >
-    <TextView
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/new_programs"
-    />
-    <FrameLayout android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-      android:id="@+id/fragment_container_new_programs"
-    />
-  </LinearLayout>
+      android:orientation="vertical"
+    >
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_programs"
+      />
+      <FrameLayout android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+        android:id="@+id/fragment_container_new_programs"
+      />
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>

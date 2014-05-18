@@ -7,13 +7,18 @@ import it.gmariotti.cardslib.library.internal.{
 }
 import it.gmariotti.cardslib.library.view.{CardListView}
 import org.scaloid.common._
+import TypedResource._
+import Tapper.Implicits._
 
 /**
  * Scrollable fragment of programs.
  * Do not place it under another scrollable view e.g. ScrollView.
  */
-class ScrollableProgramsFragment extends ProgramsFragment {
-  lazy val cardsAdapter = new CardArrayAdapter(context, cards)
+class ScrollableProgramsFragment
+  extends ProgramsFragment
+  with LoadMoreDataOnScroll
+{ self =>
+  protected lazy val cardsAdapter = new CardArrayAdapter(context, cards)
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     cardsAdapter
@@ -24,17 +29,27 @@ class ScrollableProgramsFragment extends ProgramsFragment {
     inflater: LayoutInflater,
     container: ViewGroup,
     savedInstanceState: Bundle
-  ): View = {
-    val view = inflater.inflate(R.layout.programs_view, container, false)
-    view.findViewById(R.id.program_cards).asInstanceOf[CardListView].
-      setAdapter(cardsAdapter)
-    view
-  }
+  ): View =
+    inflater.inflate(R.layout.programs_view, container, false).tap { v =>
+      val list = v.findView(TR.program_cards)
+      list.setAdapter(cardsAdapter)
+      list.setOnScrollListener(self)
+      list.setFastScrollEnabled(true)
+    }
 
-  override def addCard(card: ProgramCard): Unit = {
+  override def addCard(card: ProgramCard): Unit =
     runOnUiThread {
       cardsAdapter.add(card)
       cardsAdapter.notifyDataSetChanged
     }
+
+  override def loadMoreDataOnScroll(currentPage: Int): Unit = {
+    if (lastQuery.isEmpty) {
+      warn("Last query is empty. Skipping loadMoreDataOnScroll.")
+      return ()
+    }
+
+    runQuery(lastQuery.get.copy(page = currentPage))
+    info("loadMoreDataOnScroll")
   }
 }

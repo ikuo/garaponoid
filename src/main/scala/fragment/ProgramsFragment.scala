@@ -21,10 +21,10 @@ import ProgramsFragment._
 trait ProgramsFragment extends BaseFragment[HostActivity] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
+  protected var lastQuery: Option[Query] = None
   lazy val cards = new ArrayList[Card]()
 
   protected def addCard(card: ProgramCard)
-
   protected def context: Context = getActivity
 
   protected def tvService =
@@ -33,7 +33,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
     cards
-    runQuery
+    runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
   }
 
   private def addCard(program: Program, tvSession: TvSession): Unit = {
@@ -68,14 +68,16 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       }
     }
 
-  private def runQuery: Unit = {
+  protected def runQuery(query: Query): Unit = {
     implicit val ctx = getActivity
-    val query = getArguments.getParcelable("query").asInstanceOf[Query]
+    this.lastQuery = Some(query)
     info(s"runQuery: ${query}")
 
     tvService.run { tv =>
       if (tv.session.isEmpty) {
         hostActivity.refreshSession
+        warn("Refreshed session")
+        //runQuery(query) //TODO in callback
       } else {
         future {
           hostActivity.onStartQuery
@@ -95,7 +97,8 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     val results =
       tvSession.search(
         key = query.key,
-        n = query.perPage.getOrElse(40),
+        n = query.perPage.getOrElse(defaultPerPage),
+        p = query.page,
         resultListener = searchResultListener(tvSession)
       )
     info(s"num results = ${results.hit}")
@@ -103,6 +106,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 }
 
 object ProgramsFragment {
+  val defaultPerPage = 30
   val query = "com.github.ikuo.garaponoid.programs.query"
 
   trait HostActivity extends TvServiceClient {

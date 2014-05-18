@@ -2,14 +2,17 @@ package com.github.ikuo.garaponoid
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
+import android.os.{Bundle, Parcelable}
 import android.view.{Menu, MenuItem, Window, View}
 import android.widget.TextView
 import TypedResource._
 import org.scaloid.common._
 import Tapper.Implicits._
 
-class MainActivity extends BaseActivity with ProgramsFragment.HostActivity {
+class MainActivity
+  extends BaseActivity
+  with ProgramsFragment.HostActivity
+{
   override def onCreate(bundle: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     startService[TvService]
@@ -50,9 +53,10 @@ class MainActivity extends BaseActivity with ProgramsFragment.HostActivity {
   }
 
   override def onSeeMore: Unit = {
+    val query: Parcelable = new Query
     startActivity(
       SIntent[ProgramsActivity](Intent.ACTION_SEARCH).
-        tap(_.putExtra(ProgramsFragment.query, new Query))
+        tap(_.putExtra(ProgramsFragment.query, query))
     )
   }
 

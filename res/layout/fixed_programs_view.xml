@@ -13,7 +13,7 @@
     android:text="@string/see_more"
     android:paddingBottom="15dp"
     android:paddingRight="15dp"
-    android:paddingTop="0dp"
+    android:paddingTop="5dp"
     android:gravity="right"
     android:clickable="true"
     android:visibility="gone"

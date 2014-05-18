@@ -5,6 +5,7 @@ import android.widget.AbsListView
 import android.widget.AbsListView.OnScrollListener
 import android.widget.AbsListView.OnScrollListener._
 
+import org.scaloid.common._
 import TypedResource._
 
 trait LoadMoreDataOnScroll extends OnScrollListener {
@@ -22,7 +23,7 @@ trait LoadMoreDataOnScroll extends OnScrollListener {
     if (scrollState != SCROLL_STATE_IDLE) { return () }
     if (isLoading) { return () }
 
-    val listView = getView.findView(TR.program_cards)
+    val listView = getView.find[AbsListView](R.id.program_cards)
     if (listView.getLastVisiblePosition >= listView.getCount - 1) {
       this.currentPage += 1
       loadMoreDataOnScroll(currentPage)

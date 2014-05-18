@@ -2,10 +2,13 @@ package com.github.ikuo.garaponoid
 
 import android.os.{Parcelable, Bundle}
 import android.view.{LayoutInflater, ViewGroup, View}
+import android.widget.AbsListView
+import it.gmariotti.cardslib.library.view.CardListView
 import it.gmariotti.cardslib.library.internal.{
-  Card, CardHeader, CardArrayAdapter, CardThumbnail
+  Card, CardHeader, CardThumbnail,
+  CardArrayAdapter, CardGridArrayAdapter
 }
-import it.gmariotti.cardslib.library.view.{CardListView}
+import it.gmariotti.cardslib.library.internal.base.{BaseCardArrayAdapter}
 import org.scaloid.common._
 import TypedResource._
 import Tapper.Implicits._
@@ -18,10 +21,9 @@ class ScrollableProgramsFragment
   extends ProgramsFragment
   with LoadMoreDataOnScroll
 { self =>
-  protected lazy val cardsAdapter = new CardArrayAdapter(context, cards)
+  protected var cardsAdapter: BaseCardArrayAdapter = null
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
-    cardsAdapter
     super.onCreate(savedInstanceState)
   }
 
@@ -31,7 +33,10 @@ class ScrollableProgramsFragment
     savedInstanceState: Bundle
   ): View =
     inflater.inflate(R.layout.programs_view, container, false).tap { v =>
-      val list = v.findView(TR.program_cards)
+      val list = v.find[AbsListView](R.id.program_cards)
+      this.cardsAdapter =
+        if (list.isInstanceOf[CardListView]) new CardArrayAdapter(context, cards)
+        else new CardGridArrayAdapter(context, cards)
       list.setAdapter(cardsAdapter)
       list.setOnScrollListener(self)
       list.setFastScrollEnabled(true)

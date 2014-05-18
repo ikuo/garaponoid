@@ -12,7 +12,6 @@ import ExecutionContext.Implicits.global
 import it.gmariotti.cardslib.library.internal.{
   Card, CardHeader, CardArrayAdapter, CardThumbnail
 }
-import it.gmariotti.cardslib.library.view.{CardListView}
 import com.github.ikuo.garapon4s.TvSession
 import com.github.ikuo.garapon4s.model.{Program, SearchResultListener}
 import Tapper.Implicits._

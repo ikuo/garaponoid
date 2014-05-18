@@ -5,5 +5,5 @@
   android:hint="@string/search_hint"
   android:searchSuggestAuthority="com.github.ikuo.garaponoid"
   android:searchSuggestSelection=" ? "
-  android:searchSuggestIntentAction="android.intent.action.VIEW"
+  android:searchSuggestIntentAction="android.intent.action.SEARCH"
 />

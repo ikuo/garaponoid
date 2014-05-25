@@ -39,7 +39,7 @@ class ScrollableProgramsFragment
       list.setFastScrollEnabled(true)
     }
 
-  override def addCard(card: ProgramCard): Unit =
+  override def addCard(card: Card): Unit =
     runOnUiThread {
       cardsAdapter.add(card)
       cardsAdapter.notifyDataSetChanged

@@ -23,7 +23,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   protected var lastQuery: Option[Query] = None
   lazy val cards = new ArrayList[Card]()
 
-  protected def addCard(card: ProgramCard)
+  protected def addCard(card: Card)
   protected def context: Context = getActivity
 
   protected def tvService =

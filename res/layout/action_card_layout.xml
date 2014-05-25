@@ -3,11 +3,13 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
-  android:layout_width="fill_parent"
+  android:layout_width="@dimen/card_thumbnail_width"
   android:layout_height="wrap_content"
   android:gravity="center"
 >
   <LinearLayout
+    android:id="@+id/card_main_layout"
+    style="@style/card.main_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -22,7 +24,7 @@
 
     <LinearLayout
       android:id="@+id/card_thumb_and_content_layout"
-      android:orientation="horizontal"
+      android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
     >
@@ -30,8 +32,8 @@
         style="@style/card_thumbnail_outer_layout"
         android:visibility="gone"
         android:id="@+id/card_thumbnail_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
       />
 
       <FrameLayout
@@ -39,15 +41,7 @@
         style="@style/card.content_outer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-      >
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Action"
-          android:layout_gravity="center"
-          android:textAppearance="@android:style/TextAppearance.Medium"
-          />
-      </FrameLayout>
+      />
     </LinearLayout>
   </LinearLayout>
 

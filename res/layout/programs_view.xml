@@ -11,5 +11,5 @@
   android:horizontalSpacing="2dp"
   android:stretchMode="columnWidth"
   android:gravity="center"
-  card:list_card_layout_resourceID="@layout/list_card_thumbnail_layout"
+  card:list_card_layout_resourceID="@layout/list_program_card_layout"
 />

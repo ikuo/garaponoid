@@ -18,11 +18,14 @@
   ~  *****************************************************************************
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:card="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:card="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:layout_width="@dimen/card_thumbnail_width"
+  android:layout_height="wrap_content"
+  android:gravity="center"
+>
 
     <!-- Card visible layout -->
     <LinearLayout
@@ -30,7 +33,7 @@
         style="@style/card.main_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
         <!-- Compound view for Header Card
@@ -44,7 +47,7 @@
 
         <LinearLayout
             android:id="@+id/card_thumb_and_content_layout"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -52,17 +55,20 @@
                 style="@style/card_thumbnail_outer_layout"
                 android:id="@+id/card_thumbnail_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+            />
 
             <!-- Main Content View -->
             <FrameLayout
                 android:id="@+id/card_main_content_layout"
                 style="@style/card.content_outer_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+            />
         </LinearLayout>
-
     </LinearLayout>
 
     <!-- Compound view for Shadow

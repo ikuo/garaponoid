@@ -5,10 +5,9 @@ import android.view.{LayoutInflater, ViewGroup, View}
 import android.widget.AbsListView
 import it.gmariotti.cardslib.library.view.CardListView
 import it.gmariotti.cardslib.library.internal.{
-  Card, CardHeader, CardThumbnail,
-  CardArrayAdapter, CardGridArrayAdapter
+  Card, CardHeader, CardThumbnail, CardGridArrayAdapter
 }
-import it.gmariotti.cardslib.library.internal.base.{BaseCardArrayAdapter}
+import it.gmariotti.cardslib.library.internal.base.BaseCardArrayAdapter
 import org.scaloid.common._
 import TypedResource._
 import Tapper.Implicits._
@@ -34,9 +33,7 @@ class ScrollableProgramsFragment
   ): View =
     inflater.inflate(R.layout.programs_view, container, false).tap { v =>
       val list = v.find[AbsListView](R.id.program_cards)
-      this.cardsAdapter =
-        if (list.isInstanceOf[CardListView]) new CardArrayAdapter(context, cards)
-        else new CardGridArrayAdapter(context, cards)
+      this.cardsAdapter = new CardGridArrayAdapter(context, cards)
       list.setAdapter(cardsAdapter)
       list.setOnScrollListener(self)
       list.setFastScrollEnabled(true)

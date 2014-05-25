@@ -78,7 +78,6 @@ class MainActivity
 
   override def onFinishQuery = runOnUiThread {
     spinnerVisible(false)
-    find[TextView](R.id.see_more).setVisibility(View.VISIBLE)
   }
 
   private def updateOptionsMenuVisibility(menu: Menu): Unit = {

@@ -3,8 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/program_description"
   android:layout_width="match_parent"
-  android:layout_height="80dp"
-  android:layout_marginLeft="10dp"
-  android:layout_marginTop="10dp"
-  style="@android:style/TextAppearance.DeviceDefault.Small.Inverse"
+  android:layout_height="85dp"
+  android:layout_marginTop="5dp"
+  style="@android:style/TextAppearance.Small"
 />

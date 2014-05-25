@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <style name="card.main_layout">
-    <item name="android:background">@drawable/card_selector</item>
-    <item name="android:padding">10dp</item>
-    <item name="android:layout_marginTop">@dimen/card_main_layout_view_margin_top</item>
-    <item name="android:layout_marginBottom">@dimen/card_main_layout_view_margin_bottom</item>
-    <item name="android:layout_marginLeft">@dimen/card_main_layout_view_margin_left</item>
-    <item name="android:layout_marginRight">@dimen/card_main_layout_view_margin_right</item>
+  <style name="main_background">
+    <item name="android:background">@color/main_background</item>
+  </style>
+  <style name="card.shadow_image">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/card_shadow_height</item>
+    <item name="android:src">@drawable/card_shadow</item>
+    <item name="android:layout_below">@+id/card_main_content_layout</item>
   </style>
 </resources>

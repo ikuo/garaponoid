@@ -73,12 +73,15 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     info(s"runQuery: ${query}")
 
     tvService.run { tv =>
+      info("runQuery: service connected")
       if (tv.session.isEmpty) {
+        info("runQuery: session is empty")
         hostActivity.refreshSession
         warn("Refreshed session")
         //runQuery(query) //TODO in callback
       } else {
         future {
+          info("runQuery: startingQuery")
           hostActivity.onStartQuery
           runQuery(query, tv.session.get)
         }.onComplete {

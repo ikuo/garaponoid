@@ -3,6 +3,12 @@
   <style name="main_background">
     <item name="android:background">@color/main_background</item>
   </style>
+  <style name="card.main_layout">
+    <item name="android:background">@android:color/background_dark</item>
+  </style>
+  <style name="list_card.thumbnail">
+    <item name="android:background">@drawable/card_frame_selector</item>
+  </style>
   <style name="card.shadow_image">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/card_shadow_height</item>

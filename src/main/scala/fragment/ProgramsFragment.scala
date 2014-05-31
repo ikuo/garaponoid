@@ -52,6 +52,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       override def onClick(card: Card, view: View) =
         openUri(tvSession.webViewerUrl(program.gtvId))
     })
+    card.setClickable(true)
 
     addCard(card)
   }

@@ -42,10 +42,12 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.github.ikuo" % "garapon4s_2.10" % "0.2.1-SNAPSHOT",
-  "org.scaloid" %% "scaloid" % "3.3-8"
+  "org.scaloid" %% "scaloid" % "3.3-8",
+  aar("org.apmem.tools" % "layouts" % "1.0"),
+  aar("com.github.gabrielemariotti.cards" % "library" % "1.5.0")
 )
 
-libraryDependencies += aar("com.github.gabrielemariotti.cards" % "library" % "1.5.0")
+
 
 // Call install and run without prefix 'android:' {{{
 run <<= run in Android

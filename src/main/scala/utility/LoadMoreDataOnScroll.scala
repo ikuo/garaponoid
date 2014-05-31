@@ -10,7 +10,7 @@ import TypedResource._
 
 trait LoadMoreDataOnScroll extends OnScrollListener {
   private var isLoading = false
-  private var currentPage = 1
+  protected var currentPage = 1
 
   override def onScroll(
     view: AbsListView,

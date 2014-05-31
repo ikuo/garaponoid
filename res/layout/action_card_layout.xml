@@ -13,7 +13,7 @@
     style="@style/card.main_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/card_main_layout_height"
+    android:layout_height="@dimen/action_card_main_layout_height"
   >
     <it.gmariotti.cardslib.library.view.component.CardHeaderView
       style="@style/card.header_outer_layout"

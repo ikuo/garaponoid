@@ -9,4 +9,5 @@
   <dimen name="card_main_layout_height">285dp</dimen>
   <dimen name="card_margin_top">5dp</dimen>
   <dimen name="card_shadow_height">5dp</dimen>
+  <dimen name="action_card_main_layout_height">100dp</dimen>
 </resources>

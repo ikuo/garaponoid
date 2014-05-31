@@ -43,7 +43,7 @@ class ScrollableProgramsFragment
       cards.add(card)
       cardsAdapter.notifyDataSetChanged
     }
-    super.onStartQuery
+    if (currentPage > 1) { super.onStartQuery }
   }
 
   override protected def onFinishQuery: Unit = {
@@ -56,19 +56,14 @@ class ScrollableProgramsFragment
     setLoading(false)
   }
 
-  override def addCard(card: Card): Unit =
-    runOnUiThread {
-      cardsAdapter.add(card)
-      cardsAdapter.notifyDataSetChanged
-    }
-
-  override def loadMoreDataOnScroll(currentPage: Int): Unit = {
-    if (lastQuery.isEmpty) {
-      warn("Last query is empty. Skipping loadMoreDataOnScroll.")
-      return ()
-    }
-
-    runQuery(lastQuery.get.copy(page = currentPage))
-    info("loadMoreDataOnScroll")
+  override def addCard(card: Card): Unit = runOnUiThread {
+    cardsAdapter.add(card)
+    cardsAdapter.notifyDataSetChanged
   }
+
+  override def loadMoreDataOnScroll(currentPage: Int): Unit =
+    if (lastQuery.isEmpty)
+      warn("Last query is empty. Skipping loadMoreDataOnScroll.")
+    else
+      runQuery(lastQuery.get.copy(page = currentPage))
 }

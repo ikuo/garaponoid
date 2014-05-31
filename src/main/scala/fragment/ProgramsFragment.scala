@@ -105,11 +105,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     }
   }
 
-  protected def onStartQuery: Unit = {
-    info("runQuery: startingQuery")
-    hostActivity.onStartQuery
-  }
-
+  protected def onStartQuery: Unit = hostActivity.onStartQuery
   protected def onFinishQuery: Unit = hostActivity.onFinishQuery
 
   private def runQuery(query: Query, tvSession: TvSession): Unit = {

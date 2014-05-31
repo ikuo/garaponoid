@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="action_card_main_layout_height">@dimen/card_main_layout_height</dimen>
+</resources>

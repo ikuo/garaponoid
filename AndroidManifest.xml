@@ -42,6 +42,7 @@
     </activity>
 
     <activity
+      android:label="@string/program_list"
       android:name=".ProgramsActivity"
       android:launchMode="singleTop"
     >

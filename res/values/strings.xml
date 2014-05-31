@@ -17,4 +17,5 @@
   <string name="open_source_license"><![CDATA[<u>Open Source License</u>]]></string>
   <string name="new_programs">New programs</string>
   <string name="see_more">See more</string>
+  <string name="program_list">Program List</string>
 </resources>

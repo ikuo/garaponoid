@@ -34,29 +34,30 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   override def onCreate(state: Bundle): Unit = {
     super.onCreate(state)
     cards
-    if (state == null) {
-      runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
-    } else {
-      val cards = state.getParcelableArray(cardsName)
-      info("read card-parcelables")
-      info(cards.length.toString)
-      //TODO
-      runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
+    if (state != null) { return () }
+    runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
+  }
+
+  override def onActivityCreated(state: Bundle): Unit = {
+    super.onActivityCreated(state)
+    if (state == null) { return () }
+
+    val parcels = state.getParcelableArray(cardsName)
+    for (parcel <- parcels) parcel match {
+      case p: ProgramCardParcelable => cards.add(p.decode(getActivity))
+      case _ => ()
     }
   }
 
   override def onSaveInstanceState(out: Bundle): Unit = {
     val array = new ArrayList[ProgramCardParcelable]()
-    info(s"onSaveInstanceState ${cards.size}")
     for (card <- cards) {
       if (card.isInstanceOf[ProgramCard]) {
         array.append(card.asInstanceOf[ProgramCard].toParcelable)
       }
     }
-    out.putParcelableArray(
-      cardsName,
-      array.toArray(new Array[Parcelable](array.length))
-    )
+    out.putParcelableArray(cardsName,
+      array.toArray(new Array[Parcelable](array.length)))
     super.onSaveInstanceState(out)
   }
 

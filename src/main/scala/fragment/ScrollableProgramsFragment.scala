@@ -23,10 +23,6 @@ class ScrollableProgramsFragment
   protected var cardsAdapter: BaseCardArrayAdapter = null
   private var indicator: Option[IndicatorCard] = None
 
-  override def onCreate(savedInstanceState: Bundle): Unit = {
-    super.onCreate(savedInstanceState)
-  }
-
   override def onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup,

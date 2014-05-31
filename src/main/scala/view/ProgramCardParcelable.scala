@@ -1,6 +1,7 @@
 package com.github.ikuo.garaponoid
 
 import android.os.{Parcel, Parcelable}
+import android.content.Context
 import android.view.{View, ViewGroup}
 import android.widget.TextView
 import it.gmariotti.cardslib.library.internal.{Card, CardHeader}
@@ -21,6 +22,9 @@ class ProgramCardParcelable(
     out.writeString(thumbnailUrl)
     out.writeString(webViewerUrl)
   }
+
+  def decode(context: Context): ProgramCard =
+    ProgramCard(context, title, description, thumbnailUrl, webViewerUrl)
 }
 
 object ProgramCardParcelable {

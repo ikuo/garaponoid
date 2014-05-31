@@ -5,13 +5,13 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
-version := "0.2.6-SNAPSHOT"
+version := "0.2.6"
 
 scalaVersion := "2.10.3"
 
 versionName in Android := Some(version.value)
 
-versionCode in Android := Some(13)
+versionCode in Android := Some(14)
 
 targetSdkVersion in Android := 19
 

@@ -21,6 +21,7 @@ class ScrollableProgramsFragment
   with LoadMoreDataOnScroll
 { self =>
   protected var cardsAdapter: BaseCardArrayAdapter = null
+  private var indicator: Option[IndicatorCard] = None
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -38,6 +39,26 @@ class ScrollableProgramsFragment
       list.setOnScrollListener(self)
       list.setFastScrollEnabled(true)
     }
+
+  override protected def onStartQuery: Unit = {
+    val card = new IndicatorCard(getActivity)
+    this.indicator = Some(card)
+    runOnUiThread {
+      cards.add(card)
+      cardsAdapter.notifyDataSetChanged
+    }
+    super.onStartQuery
+  }
+
+  override protected def onFinishQuery: Unit = {
+    if (cards.size <= 0) { return () }
+    runOnUiThread {
+      indicator.map { c => cards.remove(c) }
+      cardsAdapter.notifyDataSetChanged
+    }
+    super.onFinishQuery
+    setLoading(false)
+  }
 
   override def addCard(card: Card): Unit =
     runOnUiThread {

@@ -26,10 +26,15 @@ trait LoadMoreDataOnScroll extends OnScrollListener {
     val listView = getView.find[AbsListView](R.id.program_cards)
     if (listView.getLastVisiblePosition >= listView.getCount - 1) {
       this.currentPage += 1
+      this.isLoading = true
       loadMoreDataOnScroll(currentPage)
     }
   }
 
   def getView: View
   def loadMoreDataOnScroll(currentPage: Int): Unit
+
+  protected def setLoading(value: Boolean): Unit = {
+    this.isLoading = value
+  }
 }

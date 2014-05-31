@@ -82,16 +82,22 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
         //runQuery(query) //TODO in callback
       } else {
         future {
-          info("runQuery: startingQuery")
-          hostActivity.onStartQuery
+          onStartQuery
           runQuery(query, tv.session.get)
         }.onComplete {
           case _ =>
-            if (hostActivity != null) { hostActivity.onFinishQuery }
+            if (hostActivity != null) { onFinishQuery }
         }
       }
     }
   }
+
+  protected def onStartQuery: Unit = {
+    info("runQuery: startingQuery")
+    hostActivity.onStartQuery
+  }
+
+  protected def onFinishQuery: Unit = hostActivity.onFinishQuery
 
   private def runQuery(query: Query, tvSession: TvSession): Unit = {
     Option[String](query.key).map(

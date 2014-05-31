@@ -1,0 +1,20 @@
+<resources>
+  <string name="garapon_tv_account">ガラポンTV アカウント</string>
+  <string name="action_search">番組を検索</string>
+  <string name="action_preferences">設定</string>
+  <string name="sign_in">ログイン</string>
+  <string name="sign_in_to_garapon_tv">ガラポンTVにログインする</string>
+  <string name="sign_out">ログアウト</string>
+  <string name="search_hint">番組を検索</string>
+  <string name="unknown_user">ユーザー名が違います</string>
+  <string name="wrong_password">パスワードが違います</string>
+  <string name="confirm_sign_out">ログアウトしますか？</string>
+  <string name="version">Version</string>
+  <string name="about">About</string>
+  <string name="unknown">unknown</string>
+  <string name="default_version_code">(0)</string>
+  <string name="open_source_license"><![CDATA[<u>オープンソースライセンス</u>]]></string>
+  <string name="new_programs">新着の番組</string>
+  <string name="see_more">もっと見る</string>
+  <string name="program_list">番組一覧</string>
+</resources>

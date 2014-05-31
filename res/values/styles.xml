@@ -5,6 +5,7 @@
   </style>
   <style name="card.main_layout">
     <item name="android:background">@android:color/background_dark</item>
+    <item name="android:layout_marginTop">@dimen/card_margin_top</item>
   </style>
   <style name="list_card.thumbnail">
     <item name="android:background">@drawable/card_frame_selector</item>

@@ -2,10 +2,11 @@
 <resources>
   <dimen name="card_thumbnail_width">290dp</dimen>
   <dimen name="card_thumbnail_height">168dp</dimen>
-  <dimen name="card_main_layout_view_margin_top">0dp</dimen>
-  <dimen name="card_main_layout_view_margin_bottom">0dp</dimen>
-  <dimen name="card_main_layout_view_margin_left">0dp</dimen>
-  <dimen name="card_main_layout_view_margin_right">0dp</dimen>
+  <dimen name="card_inner_content_height">85dp</dimen>
+  <dimen name="card_inner_content_margin_top">5dp</dimen>
+  <dimen name="card_inner_header_height">22dp</dimen>
+  <dimen name="card_inner_header_margin">5dp</dimen>
+  <dimen name="card_main_layout_height">285dp</dimen>
+  <dimen name="card_margin_top">5dp</dimen>
   <dimen name="card_shadow_height">5dp</dimen>
-  <dimen name="card_background_default_radius">5dp</dimen>
 </resources>

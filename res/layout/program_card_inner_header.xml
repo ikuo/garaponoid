@@ -7,9 +7,9 @@
   android:layout_height="wrap_content"
 >
   <TextView android:layout_width="match_parent"
-            android:layout_height="22dp"
+            android:layout_height="@dimen/card_inner_header_height"
             android:id="@+id/card_header_inner_simple_title"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/card_inner_header_margin"
             android:text="Title"
             style="@android:style/TextAppearance.Medium"
   />

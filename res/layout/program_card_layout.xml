@@ -25,7 +25,6 @@
   android:layout_width="@dimen/card_thumbnail_width"
   android:layout_height="wrap_content"
   android:gravity="center"
-  android:layout_marginTop="5dp"
 >
 
     <!-- Card visible layout -->

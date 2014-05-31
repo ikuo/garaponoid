@@ -2,7 +2,7 @@
 <resources>
   <color name="card_background">@android:color/background_dark</color>
   <color name="card_pressed">@color/branding_main</color>
-  <color name="action_card_text">@color/branding_main</color>
+  <color name="action_card_text">#DDFFAA</color>
   <color name="main_background">#333333</color>
   <color name="branding_main">#99CC00</color>
 </resources>

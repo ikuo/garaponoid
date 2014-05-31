@@ -32,6 +32,7 @@ class FixedProgramsFragment extends ProgramsFragment {
   override def addCard(card: Card): Unit = addCard(card, -1)
 
   private def addCard(card: Card, positionOffset: Int): Unit = {
+    cards.add(card)
     val inflater = getActivity.getLayoutInflater
     val layoutParams = new ViewGroup.LayoutParams(wc, wc)
     val parent = getView.asInstanceOf[ViewGroup]

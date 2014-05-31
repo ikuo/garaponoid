@@ -14,12 +14,14 @@ import it.gmariotti.cardslib.library.internal.{
 }
 import com.github.ikuo.garapon4s.TvSession
 import com.github.ikuo.garapon4s.model.{Program, SearchResultListener}
+import scala.collection.JavaConversions._
 import Tapper.Implicits._
 import ProgramsFragment._
 
 trait ProgramsFragment extends BaseFragment[HostActivity] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
+  val cardsName = "cards"
   protected var lastQuery: Option[Query] = None
   lazy val cards = new ArrayList[Card]()
 
@@ -29,33 +31,44 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   protected def tvService =
     getActivity.asInstanceOf[TvServiceClient].tvService
 
-  override def onCreate(savedInstanceState: Bundle): Unit = {
-    super.onCreate(savedInstanceState)
+  override def onCreate(state: Bundle): Unit = {
+    super.onCreate(state)
     cards
+    if (state != null) { return () }
     runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
   }
 
-  private def addCard(program: Program, tvSession: TvSession): Unit = {
-    implicit val context: Context = getActivity
-    val card = new ProgramCard
+  override def onActivityCreated(state: Bundle): Unit = {
+    super.onActivityCreated(state)
+    if (state == null) { return () }
 
-    card.addCardHeader(
-      (new ProgramCardHeader).tap(_.setTitle(program.title))
-    )
-    card.setDescription(program.description)
-    card.addCardThumbnail(
-      (new CardThumbnail(context)).
-        tap(_.setUrlResource(tvSession.thumbnailUrl(program.gtvId)))
-    )
-
-    card.setOnClickListener(new Card.OnCardClickListener {
-      override def onClick(card: Card, view: View) =
-        openUri(tvSession.webViewerUrl(program.gtvId))
-    })
-    card.setClickable(true)
-
-    addCard(card)
+    val parcels = state.getParcelableArray(cardsName)
+    for (parcel <- parcels) parcel match {
+      case p: ProgramCardParcelable => addCard(p.decode(getActivity))
+      case _ => ()
+    }
   }
+
+  override def onSaveInstanceState(out: Bundle): Unit = {
+    val array = new ArrayList[ProgramCardParcelable]()
+    for (card <- cards) {
+      if (card.isInstanceOf[ProgramCard]) {
+        array.append(card.asInstanceOf[ProgramCard].toParcelable)
+      }
+    }
+    out.putParcelableArray(cardsName,
+      array.toArray(new Array[Parcelable](array.length)))
+    super.onSaveInstanceState(out)
+  }
+
+  private def addCard(program: Program, tvSession: TvSession): Unit =
+    addCard(ProgramCard(
+      getActivity,
+      program.title,
+      program.description,
+      tvSession.thumbnailUrl(program.gtvId),
+      tvSession.webViewerUrl(program.gtvId)
+    ))
 
   private def searchResultListener(tvSession: TvSession) =
     new SearchResultListener {

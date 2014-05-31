@@ -9,19 +9,26 @@ import org.scaloid.common._
 import Tapper.Implicits._
 
 class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
-  override def onCreate(savedInstanceState: Bundle): Unit = {
+  override def onCreate(state: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
-    super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
+    super.onCreate(state, Some(R.layout.fragment_container))
+    spinnerVisible(false)
+    if (state != null) { setIntent(null) }  // prevent duplicate query
   }
 
-  override def onNewIntent(intent: Intent): Unit = consumeIntent(intent)
+  override def onNewIntent(intent: Intent): Unit = {
+    setIntent(intent)
+    consumeIntent
+  }
 
   override def onStart: Unit = {
-    consumeIntent(getIntent)
+    consumeIntent
     super.onStart
   }
 
-  private def consumeIntent(intent: Intent): Unit = {
+  private def consumeIntent: Unit = {
+    val intent = getIntent
+    setIntent(null)
     if (intent == null) return ()
     if (intent.getAction == Intent.ACTION_SEARCH) {
       val query: Query =
@@ -32,13 +39,11 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
       val arguments = (new Bundle).tap(_.putParcelable("query", query))
       replaceFragment(new ScrollableProgramsFragment, Some(arguments)).commit
     }
-    setIntent(null)
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {
     getMenuInflater.inflate(R.menu.programs_activity_actions, menu)
     activateProgramsSearchOnActionBar(menu)
-
     super.onCreateOptionsMenu(menu)
   }
 

@@ -13,15 +13,16 @@ class MainActivity
   extends BaseActivity
   with ProgramsFragment.HostActivity
 {
-  override def onCreate(bundle: Bundle): Unit = {
+  override def onCreate(state: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     startService[TvService]
 
     getActionBar.show
-    super.onCreate(bundle, Some(R.layout.main), false)
+    super.onCreate(state, Some(R.layout.main), false)
 
     spinnerVisible(false)
-    showSignIn
+
+    showSignIn(state)
   }
 
   override def onDestroy: Unit = {
@@ -60,18 +61,20 @@ class MainActivity
     )
   }
 
-  override def showMainPane: Unit = runOnUiThread {
+  override def showMainPane(savedInstanceState: Bundle): Unit = runOnUiThread {
     findView(TR.sign_in_view).visibility(View.GONE)
     findView(TR.main_view).visibility(View.VISIBLE)
 
-    val arguments = (new Bundle).
-      tap(_.putParcelable("query", new Query(perPage = Some(5))))
+    if (savedInstanceState == null) {
+      val arguments = (new Bundle).
+        tap(_.putParcelable("query", new Query(perPage = Some(5))))
 
-    replaceFragment(
-      new FixedProgramsFragment,
-      Some(arguments),
-      R.id.fragment_container_new_programs
-    ).commit
+      replaceFragment(
+        new FixedProgramsFragment,
+        Some(arguments),
+        R.id.fragment_container_new_programs
+      ).commit
+    }
   }
 
   override def onStartQuery = spinnerVisible(true)

@@ -16,4 +16,7 @@
     <item name="android:src">@drawable/card_shadow</item>
     <item name="android:layout_below">@+id/card_main_content_layout</item>
   </style>
+  <style name="programs_grid">
+    <item name="android:stretchMode">none</item>
+  </style>
 </resources>

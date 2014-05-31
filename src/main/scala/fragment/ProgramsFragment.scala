@@ -21,6 +21,7 @@ import ProgramsFragment._
 trait ProgramsFragment extends BaseFragment[HostActivity] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
+  val cardsName = "cards"
   protected var lastQuery: Option[Query] = None
   lazy val cards = new ArrayList[Card]()
 
@@ -36,7 +37,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     if (state == null) {
       runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
     } else {
-      val cards = state.getParcelableArray("cards")
+      val cards = state.getParcelableArray(cardsName)
       info("read card-parcelables")
       info(cards.length.toString)
       //TODO
@@ -46,15 +47,17 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 
   override def onSaveInstanceState(out: Bundle): Unit = {
     val array = new ArrayList[ProgramCardParcelable]()
+    info(s"onSaveInstanceState ${cards.size}")
     for (card <- cards) {
       if (card.isInstanceOf[ProgramCard]) {
         array.append(card.asInstanceOf[ProgramCard].toParcelable)
       }
     }
     out.putParcelableArray(
-      "cards",
+      cardsName,
       array.toArray(new Array[Parcelable](array.length))
     )
+    super.onSaveInstanceState(out)
   }
 
   private def addCard(program: Program, tvSession: TvSession): Unit =

@@ -60,12 +60,9 @@ object ProgramCard {
     description: String,
     thumbnailUrl: String,
     webViewerUrl: String
-  ): ProgramCard = {
-    val card = new ProgramCard(
+  ): ProgramCard =
+    new ProgramCard(
       context, title, description,
       thumbnailUrl, webViewerUrl
-    )
-    card.setupInnerView
-    card
-  }
+    ).tap(_.setupInnerView)
 }

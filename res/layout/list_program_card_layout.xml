@@ -4,6 +4,7 @@
   android:id="@+id/list_cardId"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
+  android:clickable="true"
   style="@style/list_card.thumbnail"
   card:card_layout_resourceID="@layout/program_card_layout"
 />

@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/program_description"
   android:layout_width="match_parent"
-  android:layout_height="85dp"
-  android:layout_marginTop="5dp"
+  android:layout_height="@dimen/card_inner_content_height"
+  android:layout_marginTop="@dimen/card_inner_content_margin_top"
   style="@android:style/TextAppearance.Small"
 />

@@ -6,13 +6,14 @@
   android:layout_width="@dimen/card_thumbnail_width"
   android:layout_height="wrap_content"
   android:gravity="center"
+  android:layout_gravity="center"
 >
   <LinearLayout
     android:id="@+id/card_main_layout"
     style="@style/card.main_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="@dimen/card_main_layout_height"
   >
     <it.gmariotti.cardslib.library.view.component.CardHeaderView
       style="@style/card.header_outer_layout"

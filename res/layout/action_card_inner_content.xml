@@ -3,10 +3,10 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/action_label"
   android:layout_width="match_parent"
-  android:layout_height="32dp"
+  android:layout_height="@dimen/card_main_layout_height"
   android:layout_margin="5dp"
   android:gravity="center"
   android:layout_gravity="center"
   android:textColor="@color/action_card_text"
-  style="@android:style/TextAppearance.Medium"
+  style="@android:style/TextAppearance.Large"
 />

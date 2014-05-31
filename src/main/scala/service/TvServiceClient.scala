@@ -45,28 +45,26 @@ trait TvServiceClient extends BaseActivity {
   private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
       tv.updateAccount(loginId, md5Password)
-      refreshSession
+      refreshSession()
     }
 
   //TODO show a PopupWindow with indicator
-  def refreshSession = tvService.run { tv =>
-    info("refreshSession")
+  def refreshSession(onComplete: => Unit) = tvService.run { tv =>
+    info("Refreshing session...")
     future {
       try {
         tv.refreshSession
-        showMainPane(null)  // new programs etc.
-      }
-      catch {
-        case e: UnknownUser => {
+        showMainPane(null)  // MainActivity
+        onComplete
+      } catch {
+        case e: UnknownUser =>
           new AlertDialogBuilder(null, R.string.unknown_user) {
             positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
           }.show
-        }
-        case e: WrongPassword => {
+        case e: WrongPassword =>
           new AlertDialogBuilder(null, R.string.wrong_password) {
             positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
           }.show
-        }
       }
     }
   }

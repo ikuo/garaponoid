@@ -22,6 +22,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   implicit val loggerTag = LoggerTag("ProgramsFragment")
 
   val cardsName = "cards"
+  val lastQueryName = "lastQuery"
   protected var lastQuery: Option[Query] = None
   lazy val cards = new ArrayList[Card]()
 
@@ -42,22 +43,37 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     super.onActivityCreated(state)
     if (state == null) { return () }
 
-    val parcels = state.getParcelableArray(cardsName)
-    for (parcel <- parcels) parcel match {
-      case p: ProgramCardParcelable => addCard(p.decode(getActivity))
-      case _ => ()
+    // restore cards
+    { val parcels = state.getParcelableArray(cardsName)
+      for (parcel <- parcels) parcel match {
+        case p: ProgramCardParcelable => addCard(p.decode(getActivity))
+        case _ => ()
+      }
+    }
+
+    // restore last query
+    val p: Parcelable = state.getParcelable(lastQueryName)
+    if (p != null) {
+      val q = p.asInstanceOf[Query]
+      this.lastQuery = Some(q)
     }
   }
 
   override def onSaveInstanceState(out: Bundle): Unit = {
-    val array = new ArrayList[ProgramCardParcelable]()
-    for (card <- cards) {
-      if (card.isInstanceOf[ProgramCard]) {
-        array.append(card.asInstanceOf[ProgramCard].toParcelable)
+    // write cards
+    { val array = new ArrayList[ProgramCardParcelable]()
+      for (card <- cards) {
+        if (card.isInstanceOf[ProgramCard]) {
+          array.append(card.asInstanceOf[ProgramCard].toParcelable)
+        }
       }
+      out.putParcelableArray(cardsName,
+        array.toArray(new Array[Parcelable](array.length)))
     }
-    out.putParcelableArray(cardsName,
-      array.toArray(new Array[Parcelable](array.length)))
+
+    // write last query
+    lastQuery.map { q: Query => out.putParcelable(lastQueryName, q) }
+
     super.onSaveInstanceState(out)
   }
 
@@ -84,15 +100,14 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   protected def runQuery(query: Query): Unit = {
     implicit val ctx = getActivity
     this.lastQuery = Some(query)
-    info(s"runQuery: ${query}")
 
     tvService.run { tv =>
       info("runQuery: service connected")
       if (tv.session.isEmpty) {
-        info("runQuery: session is empty")
-        hostActivity.refreshSession
-        warn("Refreshed session")
-        //runQuery(query) //TODO in callback
+        hostActivity.refreshSession({
+          info("Retrying query after session refresh.")
+          runQuery(query)
+        })
       } else {
         future {
           onStartQuery

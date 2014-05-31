@@ -44,7 +44,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 
     val parcels = state.getParcelableArray(cardsName)
     for (parcel <- parcels) parcel match {
-      case p: ProgramCardParcelable => cards.add(p.decode(getActivity))
+      case p: ProgramCardParcelable => addCard(p.decode(getActivity))
       case _ => ()
     }
   }

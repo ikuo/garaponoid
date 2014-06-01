@@ -6,12 +6,17 @@ import android.widget.TextView
 import it.gmariotti.cardslib.library.internal.{
   Card, CardHeader, CardArrayAdapter, CardThumbnail
 }
+import android.text.format.DateUtils
 import org.scaloid.common._
 import Tapper.Implicits._
+import TypedResource._
 
 class ProgramCard private(
   context: Context,
   title: String,
+  startDate: Long,
+  duration: String,
+  channel: String,
   description: String,
   thumbnailUrl: String,
   webViewerUrl: String
@@ -22,7 +27,7 @@ class ProgramCard private(
 
   protected def setupInnerView: Unit = {
     this.addCardHeader(
-      (new ProgramCardHeader).tap(_.setTitle(title))
+      (new ProgramCardHeader(context, duration)).tap(_.setTitle(title))
     )
     this.addCardThumbnail(
       (new CardThumbnail(context)).
@@ -36,19 +41,23 @@ class ProgramCard private(
     this.setClickable(true)
   }
 
-  override def setupInnerViewElements(parent: ViewGroup, view: View) {
+  override def setupInnerViewElements(parent: ViewGroup, view: View): Unit = {
     if (view == null) { warn("view is null"); return }
 
-    view.findViewById(R.id.program_description) match {
-      case tv: TextView => tv.setText(description)
-      case _ => warn("text view not found")
-    }
+    view.findView(TR.program_description).text(description)
+    view.findView(TR.program_channel).text(channel)
+    view.findView(TR.program_datetime).text({
+      import DateUtils._
+      DateUtils.formatDateTime(context, startDate,
+        FORMAT_SHOW_TIME|FORMAT_SHOW_DATE|FORMAT_SHOW_WEEKDAY|FORMAT_12HOUR)
+    })
+
     super.setupInnerViewElements(parent, view)
   }
 
   def toParcelable =
     new ProgramCardParcelable(
-      title, description,
+      title, startDate, duration, channel, description,
       thumbnailUrl, webViewerUrl
     )
 }
@@ -57,12 +66,15 @@ object ProgramCard {
   def apply(
     context: Context,
     title: String,
+    startDate: Long,
+    duration: String,
+    channel: String,
     description: String,
     thumbnailUrl: String,
     webViewerUrl: String
   ): ProgramCard =
     new ProgramCard(
-      context, title, description,
+      context, title, startDate, duration, channel, description,
       thumbnailUrl, webViewerUrl
     ).tap(_.setupInnerView)
 }

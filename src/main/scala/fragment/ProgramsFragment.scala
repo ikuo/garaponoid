@@ -81,6 +81,9 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     addCard(ProgramCard(
       getActivity,
       program.title,
+      program.parsedStartDate.getTime,
+      program.duration,
+      program.bc,
       program.description,
       tvSession.thumbnailUrl(program.gtvId),
       tvSession.webViewerUrl(program.gtvId)

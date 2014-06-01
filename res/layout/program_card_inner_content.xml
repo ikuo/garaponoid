@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/program_description"
+  android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="@dimen/card_inner_content_height"
-  android:layout_marginTop="@dimen/card_inner_content_margin"
-  android:layout_marginRight="2dp"
-  style="@android:style/TextAppearance.Small"
-/>
+  android:layout_marginRight="5dp"
+>
+  <!-- Description header -->
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="17dp"
+    android:layout_marginTop="3dp"
+    android:gravity="center_vertical|left"
+  >
+    <TextView
+      android:id="@+id/program_datetime"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:textColor="@android:color/darker_gray"
+      android:text="@string/unknown_datetime"
+    />
+    <FrameLayout
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+    />
+    <TextView
+      android:id="@+id/program_channel"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:textColor="@color/branding_main"
+      android:text="@string/unknown_channel"
+    />
+  </LinearLayout>
+
+  <!-- Description content -->
+  <TextView
+    android:id="@+id/program_description"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_marginTop="2dp"
+    style="@android:style/TextAppearance.Small"
+  />
+</LinearLayout>

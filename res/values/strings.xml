@@ -18,4 +18,7 @@
   <string name="new_programs">New programs</string>
   <string name="see_more">See more</string>
   <string name="program_list">Program List</string>
+  <string name="unknown_datetime">(datetime)</string>
+  <string name="unknown_duration">(duration)</string>
+  <string name="unknown_channel">(channel)</string>
 </resources>

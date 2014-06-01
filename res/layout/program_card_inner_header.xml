@@ -2,15 +2,27 @@
 
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
+  android:orientation="horizontal"
+  android:gravity="center_vertical|left"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content"
+  android:layout_height="@dimen/card_inner_header_height"
+  android:layout_margin="@dimen/card_inner_header_margin"
 >
-  <TextView android:layout_width="match_parent"
-            android:layout_height="@dimen/card_inner_header_height"
-            android:id="@+id/card_header_inner_simple_title"
-            android:layout_margin="@dimen/card_inner_header_margin"
-            android:text="Title"
-            style="@android:style/TextAppearance.Medium"
+  <TextView
+    android:id="@+id/program_duration"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/darker_gray"
+    android:layout_marginRight="5dp"
+    android:text="@string/unknown_duration"
+    style="@android:style/TextAppearance.Small"
+  />
+  <TextView
+    android:id="@+id/card_header_inner_simple_title"
+    android:layout_width="wrap_content"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:text="Title"
+    style="@android:style/TextAppearance.Medium"
   />
 </LinearLayout>

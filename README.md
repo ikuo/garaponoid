@@ -1,5 +1,8 @@
 # Garaponoid
 (work in progress) An Android client for Garapon TV.
+Simply search programs by keyword and show them in cards style as follows:
+
+![](http://drive.google.com/uc?export=view&id=0B13qn3aDmWCOSnBIZDVuTm01YVk)
 
 # Build
 Install a tweaked version (1.2.16-bypasspc) of android-sdk-plugin as follows:
@@ -39,7 +42,7 @@ Using [Scala Style Guide](http://docs.scala-lang.org/style/)
 and the followings:
 
 ## Method declaration
-When many arguments, break line for each end of argument declaration:
+When many arguments, break lines for each end of argument declaration:
 
 ```scala
 def method1(

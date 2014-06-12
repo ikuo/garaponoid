@@ -36,7 +36,7 @@ apkbuildExcludes in Android ++= Seq(
 
 resolvers ++= Seq(
   "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",
-  "Sonatype Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
+  "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Big Bee Consultants" at "http://repo.bigbeeconsultants.co.uk/repo"
 )
 

@@ -20,25 +20,24 @@ class TvService extends LocalService with ErrorHandling {
   def loginId = prefs.getString("loginId", null)
   def md5Password = prefs.getString("md5Password", null)
 
-  def updateAccount(loginId: String, md5Password: String) {
+  def updateAccount(loginId: String, md5Password: String): Unit = {
     val editor = defaultSharedPreferences.edit
     editor.putString("loginId", loginId)
     editor.putString("md5Password", md5Password)
     editor.commit
   }
 
-  def signOut {
+  def signOut: Unit = {
     val editor = defaultSharedPreferences.edit
     editor.putString("loginId", null)
     editor.putString("md5Password", null)
     editor.commit
   }
 
-  def refreshSession {
+  def refreshSession: Unit = {
     this.mTvSession = Some(tvClient.newSession(loginId, md5Password))
   }
 
-  def isSignedIn = {
+  def isSignedIn =
     defaultSharedPreferences.getString("loginId", null) != null
-  }
 }

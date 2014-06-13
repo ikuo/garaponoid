@@ -1,6 +1,7 @@
 package com.github.ikuo.garaponoid
 
 import android.os.Bundle
+import android.view.Window
 import org.scaloid.common._
 import Tapper.Implicits._
 import ProgramViewerActivity._
@@ -10,8 +11,10 @@ class ProgramViewerActivity
   with ProgramViewerFragment.HostActivity
   with TvServiceClient
 {
-  override def onCreate(savedInstanceState: Bundle): Unit =
+  override def onCreate(savedInstanceState: Bundle): Unit = {
+    getWindow().requestFeature(Window.FEATURE_PROGRESS)
     super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
+  }
 
   override def onResume: Unit = {
     consumeIntent

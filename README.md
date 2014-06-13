@@ -24,17 +24,12 @@ Create a file `./res/values/key.xml` with the following content:
 
 Replace `my_developer_id` with your developer ID of Garapon TV API.
 
-Make package and start the app by sbt:
+Make a package and start the app by sbt:
 
 ```
 $ sbt
 > android:package
 > run
-```
-
-When using other build tool, local.properties may be required:
-```
-cp local.properties.sample local.properties
 ```
 
 # Coding Style

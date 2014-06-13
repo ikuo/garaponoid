@@ -46,3 +46,5 @@
 
 -keep class **.R$*
 -keep class **.R$raw
+
+-keep class com.github.ikuo.garaponoid.endorsed.** { *; }

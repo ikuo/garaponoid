@@ -7,8 +7,20 @@ import android.content.ComponentName
 import android.os.IBinder
 
 class TvService extends LocalService with ErrorHandling {
+  implicit val tag = LoggerTag("TvService")
   lazy val prefs = defaultSharedPreferences
-  lazy val tvClient = new TvClient(getString(R.string.gtv_dev_id))
+  lazy val tvClient = new TvClient(gtvDevId)
+  lazy val gtvDevId: String =
+    try {
+      val cls = Class.forName(s"com.github.ikuo.garaponoid.endorsed.W${"x"*2}iI${14*5}k")
+      cls.getDeclaredMethod("value").invoke(cls).toString
+    } catch {
+      case _: Throwable => {
+        info("Reading dev_id from string resource")
+        getString(R.string.gtv_dev_id)
+      }
+    }
+
   private var mTvSession: Option[TvSession] = None
 
   override def onCreate: Unit = {

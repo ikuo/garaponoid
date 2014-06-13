@@ -36,7 +36,10 @@ class ProgramCard private(
 
     this.setOnClickListener(new Card.OnCardClickListener {
       override def onClick(card: Card, view: View) =
-        openUri(webViewerUrl)
+        context.startActivity(
+          SIntent[ProgramViewerActivity].
+            tap(_.putExtra(ProgramViewerActivity.urlKey, webViewerUrl))
+        )
     })
     this.setClickable(true)
   }

@@ -8,7 +8,11 @@ import android.content.Intent
 import org.scaloid.common._
 import Tapper.Implicits._
 
-class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
+class ProgramsActivity
+  extends BaseActivity
+  with ProgramsFragment.HostActivity
+  with RefreshOnPreferenceChange
+{
   private var fragmentArgument: Option[Bundle] = None
 
   override def onCreate(state: Bundle): Unit = {
@@ -16,6 +20,7 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
     super.onCreate(state, Some(R.layout.fragment_container))
     spinnerVisible(false)
     if (state != null) { setIntent(null) }  // prevent duplicate query
+    updateLastPrefs
   }
 
   override def onNewIntent(intent: Intent): Unit = {
@@ -26,6 +31,11 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
   override def onStart: Unit = {
     consumeIntent
     super.onStart
+  }
+
+  override def onResume: Unit = {
+    super.onResume
+    refreshOnPreferenceChange
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {
@@ -46,7 +56,7 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
     true
   }
 
-  private def refresh: Unit = fragmentArgument.map { argument =>
+  override def refresh: Unit = fragmentArgument.map { argument =>
     replaceFragment(
       new ScrollableProgramsFragment,
       Some(argument)

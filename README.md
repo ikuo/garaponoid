@@ -1,5 +1,5 @@
 # Garaponoid
-(work in progress) An Android client for Garapon TV.
+An Android client for Garapon TV.
 Simply search programs by keyword and show them in cards style as follows:
 
 ![](http://drive.google.com/uc?export=view&id=0B13qn3aDmWCOSnBIZDVuTm01YVk)

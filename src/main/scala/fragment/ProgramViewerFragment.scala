@@ -31,6 +31,7 @@ class ProgramViewerFragment
         wv.getSettings.tap { s =>
           s.setJavaScriptEnabled(true)
           s.setPluginState(WebSettings.PluginState.ON)
+          s.setSavePassword(false)
         }
         wv.setWebViewClient(webViewClient(originalUrl))
         wv.setWebChromeClient(webChromeClient)
@@ -50,6 +51,7 @@ class ProgramViewerFragment
       wv.loadUrl("about:blank")
       wv.clearHistory
       wv.clearCache(true)
+      wv.removeAllViews
       wv.destroy
     }
     this.webview = None

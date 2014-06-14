@@ -26,12 +26,15 @@ abstract class BaseActivity
     layoutResourceId.map(id => setContentView(id))
   }
 
-  override def onOptionsItemSelected(item: MenuItem) = {
+  override def onOptionsItemSelected(item: MenuItem): Boolean = {
+    super.onOptionsItemSelected(item)
     item.getItemId match {
       case android.R.id.home => finish
-      case _ => ()
+      case R.id.action_settings => startActivity(SIntent[SettingsActivity])
+      case R.id.action_about => startActivity(SIntent[AboutActivity])
+      case _ => return false
     }
-    super.onOptionsItemSelected(item)
+    true
   }
 
   protected def showFragment[T <: Fragment](

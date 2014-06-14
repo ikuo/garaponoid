@@ -1,6 +1,7 @@
 <resources>
   <string name="garapon_tv_account">ガラポンTV アカウント</string>
   <string name="action_search">番組を検索</string>
+  <string name="action_refresh">更新</string>
   <string name="action_preferences">設定</string>
   <string name="sign_in">ログイン</string>
   <string name="sign_in_to_garapon_tv">ガラポンTVにログインする</string>

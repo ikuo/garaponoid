@@ -9,6 +9,8 @@ import org.scaloid.common._
 import Tapper.Implicits._
 
 class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
+  private var fragmentArgument: Option[Bundle] = None
+
   override def onCreate(state: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
     super.onCreate(state, Some(R.layout.fragment_container))
@@ -26,6 +28,31 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
     super.onStart
   }
 
+  override def onCreateOptionsMenu(menu: Menu) = {
+    getMenuInflater.inflate(R.menu.programs_activity_actions, menu)
+    activateProgramsSearchOnActionBar(menu)
+    super.onCreateOptionsMenu(menu)
+  }
+
+  override def onStartQuery = spinnerVisible(true)
+  override def onFinishQuery = spinnerVisible(false)
+
+  override def onOptionsItemSelected(item: MenuItem): Boolean = {
+    if (super.onOptionsItemSelected(item)) { return true }
+    item.getItemId match {
+      case R.id.action_refresh => refresh
+      case _ => return false
+    }
+    true
+  }
+
+  private def refresh: Unit = fragmentArgument.map { argument =>
+    replaceFragment(
+      new ScrollableProgramsFragment,
+      Some(argument)
+    ).commit
+  }
+
   private def consumeIntent: Unit = {
     val intent = getIntent
     setIntent(null)
@@ -36,19 +63,11 @@ class ProgramsActivity extends BaseActivity with ProgramsFragment.HostActivity {
           case None => new Query(key = intent.getStringExtra(SearchManager.QUERY))
           case Some(q) => q.asInstanceOf[Query]
         }
-      val arguments = (new Bundle).tap(_.putParcelable("query", query))
-      replaceFragment(new ScrollableProgramsFragment, Some(arguments)).commit
+      fragmentArgument =
+        Some((new Bundle).tap(_.putParcelable("query", query)))
+      refresh
     }
   }
-
-  override def onCreateOptionsMenu(menu: Menu) = {
-    getMenuInflater.inflate(R.menu.programs_activity_actions, menu)
-    activateProgramsSearchOnActionBar(menu)
-    super.onCreateOptionsMenu(menu)
-  }
-
-  override def onStartQuery = spinnerVisible(true)
-  override def onFinishQuery = spinnerVisible(false)
 }
 
 object ProgramsActivity {

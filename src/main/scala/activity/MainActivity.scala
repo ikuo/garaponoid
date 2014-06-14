@@ -38,15 +38,15 @@ class MainActivity
     super.onCreateOptionsMenu(menu)
   }
 
-  override def onOptionsItemSelected(item: MenuItem) = {
+  override def onOptionsItemSelected(item: MenuItem): Boolean = {
+    if (super.onOptionsItemSelected(item)) { return true }
     item.getItemId match {
-      case R.id.action_settings => startActivity(SIntent[SettingsActivity])
+      case R.id.action_refresh => refresh
       case R.id.action_sign_in => promptSignIn()
       case R.id.action_sign_out => signOut
-      case R.id.action_about => startActivity(SIntent[AboutActivity])
-      case _ => ()
+      case _ => return false
     }
-    super.onOptionsItemSelected(item)
+    true
   }
 
   override def onPrepareOptionsMenu(menu: Menu): Boolean = {
@@ -65,23 +65,22 @@ class MainActivity
   override def showMainPane(savedInstanceState: Bundle): Unit = runOnUiThread {
     findView(TR.sign_in_view).visibility(View.GONE)
     findView(TR.main_view).visibility(View.VISIBLE)
-
-    if (savedInstanceState == null) {
-      val arguments = (new Bundle).
-        tap(_.putParcelable("query", new Query(perPage = Some(5))))
-
-      replaceFragment(
-        new FixedProgramsFragment,
-        Some(arguments),
-        R.id.fragment_container_new_programs
-      ).commit
-    }
+    if (savedInstanceState == null) { refresh }
   }
 
   override def onStartQuery = spinnerVisible(true)
 
-  override def onFinishQuery = runOnUiThread {
-    spinnerVisible(false)
+  override def onFinishQuery = runOnUiThread { spinnerVisible(false) }
+
+  private def refresh: Unit = {
+    val arguments = (new Bundle).
+      tap(_.putParcelable("query", new Query(perPage = Some(5))))
+
+    replaceFragment(
+      new FixedProgramsFragment,
+      Some(arguments),
+      R.id.fragment_container_new_programs
+    ).commit
   }
 
   private def updateOptionsMenuVisibility(menu: Menu): Unit = {

@@ -1,10 +1,13 @@
 # Garaponoid
-An Android client for Garapon TV.
+An Android client for [Garapon TV](http://garapon.tv/).
 Simply search programs by keyword and show them in cards style as follows:
 
 ![](http://drive.google.com/uc?export=view&id=0B13qn3aDmWCOSnBIZDVuTm01YVk)
 
-# Build
+# Building
+Garaponoid is written in [Scala](http://www.scala-lang.org/)
+and built with [sbt](http://www.scala-sbt.org/).
+
 Install a tweaked version (1.2.16-bypasspc) of android-sdk-plugin as follows:
 ```
 $ git clone git@github.com:ikuo/android-sdk-plugin.git
@@ -61,6 +64,6 @@ Garaponoid is powered by the following works:
 - [Android flow layout](https://github.com/ApmeM/android-flowlayout) - Apache License 2.0
 - [sbt android-sdk-plugin](https://github.com/pfn/android-sdk-plugin) (build time)
 
-The logo (TV_icon.svg and tv.png) is derived from:
+The logo (tv.svg) is derived from:
 
 - [A work of Justin Ternet](http://openclipart.org/detail/182928/tv-cartoon-empty-by-justin-ternet-182928) - Public Domain

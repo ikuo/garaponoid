@@ -1,9 +1,10 @@
 package com.github.ikuo.garaponoid
 
 import android.app.Activity
-import android.os.Bundle
+import android.os.{Bundle, Build}
 import android.view.{View, ViewGroup, LayoutInflater}
-import android.webkit.{WebView, WebViewClient, WebChromeClient, WebSettings}
+import android.webkit.{WebView, WebViewClient, WebChromeClient,
+  WebSettings, WebResourceResponse}
 import org.scaloid.common._
 import Tapper.Implicits._
 import ProgramViewerFragment._
@@ -21,7 +22,12 @@ class ProgramViewerFragment
     savedInstanceState: Bundle
   ): View =
     new WebView(getActivity).tap { wv =>
+      info(s"creating WebView")
+      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        WebView.setWebContentsDebuggingEnabled(true);
+      }
       Option(getArguments.getString("url")).map { originalUrl =>
+        info(s"originalUrl: ${originalUrl}")
         wv.getSettings.tap { s =>
           s.setJavaScriptEnabled(true)
           s.setPluginState(WebSettings.PluginState.ON)
@@ -34,19 +40,20 @@ class ProgramViewerFragment
       }
     }
 
-  override def onDestroy: Unit = {
+  override def onDestroyView: Unit = {
     this.webview.map { wv =>
+      info("Destroying webview")
+      wv.pauseTimers
       wv.stopLoading
       wv.setWebChromeClient(null)
       wv.setWebViewClient(null)
       wv.loadUrl("about:blank")
       wv.clearHistory
       wv.clearCache(true)
-      wv.freeMemory
-      wv.pauseTimers
+      wv.destroy
     }
     this.webview = None
-    super.onDestroy
+    super.onDestroyView
   }
 
   override def notifyAccount(loginId: String, password: String): Unit = {
@@ -68,6 +75,34 @@ class ProgramViewerFragment
         case _ => warn(s"Unknown URL: ${url}")
       }
     }
+
+    override def onLoadResource(view: WebView, url: String): Unit = {
+      info(s"onLoadResource ${url}")
+      if (url.contains("/swf/fp/swfobject.js")) {
+        info("Going to fire workaround 1")
+        evalJs(view, "alert('1')")
+        //evalJs(view, "alert(swfobject)")
+        evalJs(view, "$.ready()")
+      }
+      super.onLoadResource(view, url)
+    }
+
+    override def shouldOverrideUrlLoading(view: WebView, url: String): Boolean = {
+      info(s"shouldOverrideUrlLoading ${url}")
+      super.shouldOverrideUrlLoading(view, url)
+    }
+
+    override def shouldInterceptRequest(view: WebView, url: String): WebResourceResponse = {
+      info(s"shouldInterceptRequest ${url}")
+      super.shouldInterceptRequest(view, url)
+    }
+
+    override def onReceivedError(
+      view: WebView,
+      errorCode: Int,
+      description: String,
+      url: String
+    ): Unit = error(s"${errorCode} ${url} ${description}")
   }
 
   private def webChromeClient = new WebChromeClient() {

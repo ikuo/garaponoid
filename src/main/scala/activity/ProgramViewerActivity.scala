@@ -2,6 +2,7 @@ package com.github.ikuo.garaponoid
 
 import android.os.Bundle
 import android.view.Window
+import android.content.Intent
 import org.scaloid.common._
 import Tapper.Implicits._
 import ProgramViewerActivity._
@@ -16,6 +17,8 @@ class ProgramViewerActivity
     super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
   }
 
+  override def onNewIntent(intent: Intent) = setIntent(intent)
+
   override def onResume: Unit = {
     consumeIntent
     super.onResume
@@ -29,8 +32,9 @@ class ProgramViewerActivity
   private def consumeIntent: Unit = {
     Option(getIntent).map { intent =>
       Option(intent.getStringExtra(urlKey)).map { url =>
+        info(s"consumeIntent: ${url}")
         val arguments = (new Bundle).tap(_.putString("url", url))
-        showFragment(new ProgramViewerFragment, Some(arguments)).
+        replaceFragment(new ProgramViewerFragment, Some(arguments)).
           commit
       }
     }

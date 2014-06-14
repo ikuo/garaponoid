@@ -20,7 +20,6 @@ class ProgramsActivity
     super.onCreate(state, Some(R.layout.fragment_container))
     spinnerVisible(false)
     if (state != null) { setIntent(null) }  // prevent duplicate query
-    updateLastPrefs
   }
 
   override def onNewIntent(intent: Intent): Unit = {
@@ -31,11 +30,6 @@ class ProgramsActivity
   override def onStart: Unit = {
     consumeIntent
     super.onStart
-  }
-
-  override def onResume: Unit = {
-    super.onResume
-    refreshOnPreferenceChange
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {

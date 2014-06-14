@@ -12,6 +12,7 @@ import Tapper.Implicits._
 class MainActivity
   extends BaseActivity
   with ProgramsFragment.HostActivity
+  with RefreshOnPreferenceChange
 {
   override def onCreate(state: Bundle): Unit = {
     requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
@@ -72,7 +73,7 @@ class MainActivity
 
   override def onFinishQuery = runOnUiThread { spinnerVisible(false) }
 
-  private def refresh: Unit = {
+  override def refresh: Unit = {
     val arguments = (new Bundle).
       tap(_.putParcelable("query", new Query(perPage = Some(5))))
 

@@ -40,6 +40,7 @@ class MainActivity
 
   override def onOptionsItemSelected(item: MenuItem) = {
     item.getItemId match {
+      case R.id.action_settings => startActivity(SIntent[SettingsActivity])
       case R.id.action_sign_in => promptSignIn()
       case R.id.action_sign_out => signOut
       case R.id.action_about => startActivity(SIntent[AboutActivity])

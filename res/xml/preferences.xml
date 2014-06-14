@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <ListPreference
+    android:key="pref_video_viewer"
+    android:title="@string/pref_video_viewer"
+    android:entries="@array/pref_video_viewers"
+    android:entryValues="@array/pref_video_viewer_values"
+    android:defaultValue="hls"
+    android:summary="@string/pref_video_viewer_summary"
+  />
+</PreferenceScreen>

@@ -55,6 +55,13 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".AboutActivity" />
+    <activity
+      android:name=".SettingsActivity"
+      android:label="@string/action_preferences"
+    />
+
+    <activity
+      android:name=".AboutActivity"
+    />
   </application>
 </manifest> 

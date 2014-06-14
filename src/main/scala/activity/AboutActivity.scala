@@ -5,11 +5,9 @@ import org.scaloid.common._
 import Tapper.Implicits._
 
 class AboutActivity extends BaseActivity with AboutFragment.HostActivity {
-  override def onCreate(savedInstanceState: Bundle): Unit = {
-    super.onCreate(savedInstanceState, Some(R.layout.fragment_container))
-    if (savedInstanceState == null) {
-      showFragment(new AboutFragment).commit
-    }
+  override def onCreate(state: Bundle): Unit = {
+    super.onCreate(state, Some(R.layout.fragment_container))
+    if (state == null) { showFragment(new AboutFragment).commit }
   }
 
   override def showOpenSourceLicense: Unit = {

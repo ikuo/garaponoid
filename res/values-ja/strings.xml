@@ -17,4 +17,9 @@
   <string name="new_programs">新着の番組</string>
   <string name="see_more">もっと見る</string>
   <string name="program_list">番組一覧</string>
+  <string name="pref_video_viewer">動画ビューア</string>
+  <string name="pref_video_viewer_summary">番組動画を開く方法</string>
+  <string name="pref_video_viewer_hls">HLS: HTTP Live Streaming</string>
+  <string name="pref_video_viewer_rtmp">RTMP: Real Time Messaging Protocol</string>
+  <string name="pref_video_viewer_webviewer">Flash (Webブラウザ)</string>
 </resources>

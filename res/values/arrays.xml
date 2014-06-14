@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="pref_video_viewers">
+    <item>@string/pref_video_viewer_hls</item>
+    <item>@string/pref_video_viewer_rtmp</item>
+    <item>@string/pref_video_viewer_webviewer</item>
+  </array>
+  <array name="pref_video_viewer_values">
+    <item>hls</item>
+    <item>rtmp</item>
+    <item>webviewer</item>
+  </array>
+</resources>

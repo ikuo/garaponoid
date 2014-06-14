@@ -21,4 +21,9 @@
   <string name="unknown_datetime">(datetime)</string>
   <string name="unknown_duration">(duration)</string>
   <string name="unknown_channel">(channel)</string>
+  <string name="pref_video_viewer">Video Viewer</string>
+  <string name="pref_video_viewer_summary">How to open program videos</string>
+  <string name="pref_video_viewer_hls">HLS: HTTP Live Streaming</string>
+  <string name="pref_video_viewer_rtmp">RTMP: Real Time Messaging Protocol</string>
+  <string name="pref_video_viewer_webviewer">Flash (Open in web browser)</string>
 </resources>

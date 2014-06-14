@@ -86,8 +86,17 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       program.bc,
       program.description,
       tvSession.thumbnailUrl(program.gtvId),
-      tvSession.webViewerUrl(program.gtvId)
+      selectViewerUrl(tvSession, program.gtvId)
     ))
+
+  private def selectViewerUrl(tvSession: TvSession, gtvId: String): String = {
+    implicit val ctx: Context = context
+    defaultSharedPreferences.getString("pref_video_viewer", null) match {
+      case "webviewer" => tvSession.webViewerUrl(gtvId)
+      case "rtmp" => tvSession.rtmpUrl(gtvId)
+      case _ => tvSession.streamingUrl(gtvId) // HLS
+    }
+  }
 
   private def searchResultListener(tvSession: TvSession) =
     new SearchResultListener {

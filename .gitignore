@@ -5,3 +5,4 @@ target/
 /local.properties
 /res/values/key.xml
 /src/main/scala/endorsed/
+/device*.png

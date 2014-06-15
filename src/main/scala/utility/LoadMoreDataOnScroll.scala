@@ -1,5 +1,6 @@
 package com.github.ikuo.garaponoid
 
+import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
 import android.widget.AbsListView.OnScrollListener
@@ -9,8 +10,15 @@ import org.scaloid.common._
 import TypedResource._
 
 trait LoadMoreDataOnScroll extends OnScrollListener {
-  private var isLoading = false
   protected var currentPage = 1
+  private val currentPageKey = "LoadMoreDataOnScroll.currentPage"
+  private var isLoading = false
+
+  protected def savePageState(out: Bundle): Unit =
+    out.putInt(currentPageKey, currentPage)
+
+  protected def restorePageState(in: Bundle): Unit =
+    if (in != null) { this.currentPage = in.getInt(currentPageKey, 1) }
 
   override def onScroll(
     view: AbsListView,

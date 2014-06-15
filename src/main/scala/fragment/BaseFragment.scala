@@ -7,7 +7,8 @@ import android.app.{Activity, Fragment}
  * A Fragment with runtime type check on hosting activity.
  */
 abstract class BaseFragment[T](implicit activityClassTag: ClassTag[T])
-  extends Fragment with ErrorHandling {
+  extends Fragment with ErrorHandling
+{
   protected def hostActivity = getActivity.asInstanceOf[T]
 
   override def onAttach(activity: Activity): Unit = {

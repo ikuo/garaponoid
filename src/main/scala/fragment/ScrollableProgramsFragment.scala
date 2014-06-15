@@ -66,4 +66,14 @@ class ScrollableProgramsFragment
       warn("Last query is empty. Skipping loadMoreDataOnScroll.")
     else
       runQuery(lastQuery.get.copy(page = currentPage))
+
+  override def onSaveInstanceState(out: Bundle): Unit = {
+    super.onSaveInstanceState(out)
+    savePageState(out)
+  }
+
+  override def onActivityCreated(state: Bundle): Unit = {
+    super.onActivityCreated(state)
+    restorePageState(state)
+  }
 }

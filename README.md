@@ -4,6 +4,8 @@ Simply search programs by keyword and show them in cards style as follows:
 
 ![](http://drive.google.com/uc?export=view&id=0B13qn3aDmWCOSnBIZDVuTm01YVk)
 
+Distributed on Google Play: https://play.google.com/store/apps/details?id=com.github.ikuo.garaponoid
+
 # Building
 Garaponoid is written in [Scala](http://www.scala-lang.org/)
 and built with [sbt](http://www.scala-sbt.org/).

@@ -14,8 +14,7 @@ Install a tweaked version (1.2.16-bypasspc) of android-sdk-plugin as follows:
 ```
 $ git clone git@github.com:ikuo/android-sdk-plugin.git
 $ cd android-sdk-plugin
-$ git co bypasspc
-$ sbt
+$ git checkout bypasspc
 $ sbt publish-local
 ```
 

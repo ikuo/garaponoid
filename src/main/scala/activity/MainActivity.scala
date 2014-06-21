@@ -73,7 +73,7 @@ class MainActivity
 
   override def onFinishQuery = runOnUiThread { spinnerVisible(false) }
 
-  override def refresh: Unit = {
+  override def refresh: Unit = try {
     val arguments = (new Bundle).
       tap(_.putParcelable("query", new Query(perPage = Some(5))))
 
@@ -82,7 +82,7 @@ class MainActivity
       Some(arguments),
       R.id.fragment_container_new_programs
     ).commit
-  }
+  } catch(handleError)
 
   private def updateOptionsMenuVisibility(menu: Menu): Unit = {
     tvService { tv =>

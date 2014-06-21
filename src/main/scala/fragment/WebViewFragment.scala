@@ -6,7 +6,7 @@ import android.view.{View, ViewGroup, LayoutInflater}
 import android.webkit.WebView
 import org.scaloid.common._
 
-class WebViewFragment extends BaseFragment[Activity] {
+class WebViewFragment extends BaseFragment[Activity with ErrorHandling] {
   implicit val loggerTag = LoggerTag("WebViewFragment")
 
   override def onCreateView(

@@ -30,7 +30,8 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   protected def context: Context = getActivity
 
   protected def tvService =
-    getActivity.asInstanceOf[TvServiceClient].tvService
+    if (getActivity == null) None
+    else Some(getActivity.asInstanceOf[TvServiceClient].tvService)
 
   override def onCreate(state: Bundle): Unit = {
     super.onCreate(state)
@@ -78,7 +79,8 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
   }
 
   private def addCard(program: Program, tvSession: TvSession): Unit =
-    addCard(ProgramCard(
+    if (getActivity == null) warn("Skipping addCard")
+    else addCard(ProgramCard(
       getActivity,
       program.title,
       program.parsedStartDate.getTime,
@@ -113,7 +115,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     implicit val ctx = getActivity
     this.lastQuery = Some(query)
 
-    tvService.run { tv =>
+    tvService.map(_.run { tv =>
       info("runQuery: service connected")
       if (tv.session.isEmpty) {
         hostActivity.refreshSession({
@@ -126,9 +128,9 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
           runQuery(query, tv.session.get)
         }.map {
           case _ => if (hostActivity != null) { onFinishQuery }
-        }.onFailure { case e: Throwable => throw e }
+        }.onFailure(handleError)
       }
-    }
+    })
   }
 
   protected def onStartQuery: Unit = hostActivity.onStartQuery
@@ -151,7 +153,7 @@ object ProgramsFragment {
   val defaultPerPage = 30
   val query = "com.github.ikuo.garaponoid.programs.query"
 
-  trait HostActivity extends TvServiceClient {
+  trait HostActivity extends TvServiceClient with ErrorHandling {
     def onStartQuery: Unit = ()
     def onFinishQuery: Unit = ()
     def onSeeMore: Unit = ()

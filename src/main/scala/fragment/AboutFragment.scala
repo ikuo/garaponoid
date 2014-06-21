@@ -37,7 +37,7 @@ class AboutFragment extends BaseFragment[HostActivity] {
 }
 
 object AboutFragment {
-  trait HostActivity {
+  trait HostActivity extends ErrorHandling {
     def showOpenSourceLicense: Unit
   }
 }

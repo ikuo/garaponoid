@@ -1,23 +1,25 @@
 package com.github.ikuo.garaponoid
 
 import org.scaloid.common._
-import android.app.{Activity, Fragment, FragmentTransaction}
+import android.app.{Activity, Fragment, FragmentTransaction, DialogFragment}
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.SearchView
 import android.view.Menu
+import com.github.ikuo.android_error_dialog.ErrorDialogFragment
 import TypedResource._
 import Tapper.Implicits._
 
 abstract class BaseActivity
-  extends SActivity with TypedActivity with ErrorHandling {
+  extends SActivity with TypedActivity
+{
+  private val dialogTag = "dialog"
+
   def onCreate(
     savedInstanceState: Bundle,
     layoutResourceId: Option[Int] = None,
     displayHomeAsUp: Boolean = true
   ): Unit = {
-    setErrorHandler
-
     super.onCreate(savedInstanceState)
 
     if (displayHomeAsUp) {
@@ -25,6 +27,8 @@ abstract class BaseActivity
     }
     layoutResourceId.map(id => setContentView(id))
   }
+
+  def fatalError(ex: Throwable): Unit = showDialog(ErrorDialogFragment(ex))
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     super.onOptionsItemSelected(item)
@@ -35,6 +39,19 @@ abstract class BaseActivity
       case _ => return false
     }
     true
+  }
+
+  def showDialog(dialogFragment: => DialogFragment): Unit = {
+    val fm = getFragmentManager
+    val ft = fm.beginTransaction
+
+    Option(fm.findFragmentByTag(dialogTag)).map { prev => ft.remove(prev) }
+
+    dialogFragment.show(ft, dialogTag)
+  }
+
+  protected val handleError: PartialFunction[Throwable, Unit] = {
+    case e: Throwable => fatalError(e)
   }
 
   protected def showFragment[T <: Fragment](

@@ -34,6 +34,9 @@ apkbuildExcludes in Android ++= Seq(
   "META-INF/NOTICE"
 )
 
+// TODO remove after release of android_error_dialog
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+
 resolvers ++= Seq(
   "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
@@ -44,7 +47,8 @@ libraryDependencies ++= Seq(
   "com.github.ikuo" % "garapon4s_2.10" % "0.2.1",
   "org.scaloid" %% "scaloid" % "3.3-8",
   aar("org.apmem.tools" % "layouts" % "1.0"),
-  aar("com.github.gabrielemariotti.cards" % "library" % "1.5.0")
+  aar("com.github.gabrielemariotti.cards" % "library" % "1.5.0"),
+  aar("com.github.ikuo" % "android-error-dialog_2.10" % "0.1.3-SNAPSHOT")
 )
 
 
@@ -53,11 +57,3 @@ run <<= run in Android
 
 install <<= install in Android
 // }}}
-
-val cleanProguard = taskKey[Unit]("Clean output files of proguard")
-
-cleanProguard := {
-  import sys.process._
-  "rm -rf target/scala-2.10/cache/garaponoid/global/proguard_cache".!
-  "rm -rf bin/classes.proguard.jar".!
-}

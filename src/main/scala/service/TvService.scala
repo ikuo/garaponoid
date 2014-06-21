@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.ComponentName
 import android.os.IBinder
 
-class TvService extends LocalService with ErrorHandling {
+class TvService extends LocalService {
   implicit val tag = LoggerTag("TvService")
   lazy val prefs = defaultSharedPreferences
   lazy val tvClient = new TvClient(gtvDevId)
@@ -24,7 +24,6 @@ class TvService extends LocalService with ErrorHandling {
   private var mTvSession: Option[TvSession] = None
 
   override def onCreate: Unit = {
-    setErrorHandler
     super.onCreate
   }
 

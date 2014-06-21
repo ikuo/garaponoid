@@ -138,14 +138,12 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     Option[String](query.key).map(
       ProgramsSearchSuggestions.saveRecentQuery(getActivity, _))
 
-    val results =
-      tvSession.search(
-        key = query.key,
-        n = query.perPage.getOrElse(defaultPerPage),
-        p = query.page,
-        resultListener = searchResultListener(tvSession)
-      )
-    info(s"num results = ${results.hit}")
+    tvSession.search(
+      key = query.key,
+      n = query.perPage.getOrElse(defaultPerPage),
+      p = query.page,
+      resultListener = searchResultListener(tvSession)
+    )
   }
 }
 

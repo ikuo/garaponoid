@@ -124,10 +124,9 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
         future {
           onStartQuery
           runQuery(query, tv.session.get)
-        }.onComplete {
-          case _ =>
-            if (hostActivity != null) { onFinishQuery }
-        }
+        }.map {
+          case _ => if (hostActivity != null) { onFinishQuery }
+        }.onFailure { case e: Throwable => throw e }
       }
     }
   }

@@ -14,6 +14,20 @@ trait TvServiceClient extends BaseActivity {
   def promptSignIn(userName: String = "") =
     new SignInDialog(userName, signIn, this).show
 
+  //TODO show a PopupWindow with indicator
+  def refreshSession(onComplete: => Unit) = tvService.run { tv =>
+    info("Refreshing session...")
+    future {
+      tv.refreshSession
+      showMainPane(null)  // MainActivity
+      onComplete
+    }.onFailure {
+      case _: UnknownUser => promptRetryLogin(R.string.unknown_user, tv.loginId)
+      case _: WrongPassword => promptRetryLogin(R.string.wrong_password, tv.loginId)
+      case e: Throwable => throw e
+    }
+  }
+
   protected def signOut: Unit = {
     new AlertDialogBuilder(null, R.string.confirm_sign_out) {
       positiveButton(android.R.string.ok, {
@@ -35,12 +49,12 @@ trait TvServiceClient extends BaseActivity {
     findView(TR.button_sign_in).onClick(promptSignIn())
   }
 
+  protected def showMainPane(savedInstanceState: Bundle): Unit = ()
+
   private def showSignInPane: Unit = runOnUiThread {
     findView(TR.main_view).setVisibility(View.GONE)
     findView(TR.sign_in_view).setVisibility(View.VISIBLE)
   }
-
-  protected def showMainPane(savedInstanceState: Bundle): Unit = ()
 
   private def signIn(loginId: String, md5Password: String): Unit =
     tvService.run { tv =>
@@ -48,23 +62,8 @@ trait TvServiceClient extends BaseActivity {
       refreshSession()
     }
 
-  //TODO show a PopupWindow with indicator
-  def refreshSession(onComplete: => Unit) = tvService.run { tv =>
-    info("Refreshing session...")
-    future {
-      tv.refreshSession
-      showMainPane(null)  // MainActivity
-      onComplete
-    }.onFailure {
-      case e: UnknownUser =>
-        new AlertDialogBuilder(null, R.string.unknown_user) {
-          positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
-        }.show
-      case e: WrongPassword =>
-        new AlertDialogBuilder(null, R.string.wrong_password) {
-          positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
-        }.show
-      case e: Throwable => throw e
-    }
-  }
+  private def promptRetryLogin(messageId: Int, loginId: String): Unit =
+    new AlertDialogBuilder(null, messageId) {
+      positiveButton(android.R.string.ok, promptSignIn(loginId))
+    }.show
 }

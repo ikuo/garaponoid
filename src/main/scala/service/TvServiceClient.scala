@@ -52,20 +52,19 @@ trait TvServiceClient extends BaseActivity {
   def refreshSession(onComplete: => Unit) = tvService.run { tv =>
     info("Refreshing session...")
     future {
-      try {
-        tv.refreshSession
-        showMainPane(null)  // MainActivity
-        onComplete
-      } catch {
-        case e: UnknownUser =>
-          new AlertDialogBuilder(null, R.string.unknown_user) {
-            positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
-          }.show
-        case e: WrongPassword =>
-          new AlertDialogBuilder(null, R.string.wrong_password) {
-            positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
-          }.show
-      }
+      tv.refreshSession
+      showMainPane(null)  // MainActivity
+      onComplete
+    }.onFailure {
+      case e: UnknownUser =>
+        new AlertDialogBuilder(null, R.string.unknown_user) {
+          positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
+        }.show
+      case e: WrongPassword =>
+        new AlertDialogBuilder(null, R.string.wrong_password) {
+          positiveButton(android.R.string.ok, promptSignIn(tv.loginId))
+        }.show
+      case e: Throwable => throw e
     }
   }
 }

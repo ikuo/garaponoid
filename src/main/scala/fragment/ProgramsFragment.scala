@@ -90,7 +90,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     ))
 
   private def selectViewerUrl(tvSession: TvSession, gtvId: String): String = {
-    implicit val ctx: Context = context
+    implicit val ctx: Context = context.getApplicationContext
     defaultSharedPreferences.getString("pref_video_viewer", null) match {
       case "webviewer" => tvSession.webViewerUrl(gtvId)
       case "rtmp" => tvSession.rtmpUrl(gtvId)

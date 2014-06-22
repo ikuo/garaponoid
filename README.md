@@ -65,8 +65,9 @@ Garaponoid is powered by the following works:
 - [Garapon4S](https://github.com/ikuo/garapon4s) - Apache License 2.0
 - [Scaloid](https://github.com/pocorall/scaloid) - Apache License 2.0
 - [Cards Library](https://github.com/gabrielemariotti/cardslib) - Apache License 2.0
-- [Android flow layout](https://github.com/ApmeM/android-flowlayout) - Apache License 2.0
 - [sbt android-sdk-plugin](https://github.com/pfn/android-sdk-plugin) (build time)
+- [Android flow layout](https://github.com/ApmeM/android-flowlayout) - Apache License 2.0
+- [Android error dialog](https://github.com/ikuo/android-error-dialog) - Apache License 2.0
 
 The logo (tv.svg) is derived from:
 

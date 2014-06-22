@@ -10,14 +10,6 @@ Distributed on Google Play: https://play.google.com/store/apps/details?id=com.gi
 Garaponoid is written in [Scala](http://www.scala-lang.org/)
 and built with [sbt](http://www.scala-sbt.org/).
 
-Install a tweaked version (1.2.16-bypasspc) of android-sdk-plugin as follows:
-```
-$ git clone git@github.com:ikuo/android-sdk-plugin.git
-$ cd android-sdk-plugin
-$ git checkout bypasspc
-$ sbt publish-local
-```
-
 Create a file `./res/values/key.xml` with the following content:
 
 ```xml

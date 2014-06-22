@@ -54,7 +54,10 @@ def method1(
 ```
 
 # License
+
 Apache License 2.0
+
+Copyright (c) 2014, Ikuo Matsumura
 
 # Credits
 Garaponoid is powered by the following works:

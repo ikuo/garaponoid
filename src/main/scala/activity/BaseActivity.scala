@@ -50,6 +50,13 @@ abstract class BaseActivity
     dialogFragment.show(ft, dialogTag)
   }
 
+  def withIndicator[T](f: => T): T = {
+    spinnerVisible(true)
+    val result = f
+    spinnerVisible(false)
+    result
+  }
+
   protected val handleError: PartialFunction[Throwable, Unit] = {
     case e: Throwable => fatalError(e)
   }

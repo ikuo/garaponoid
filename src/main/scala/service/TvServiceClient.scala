@@ -59,9 +59,11 @@ trait TvServiceClient extends BaseActivity {
   }
 
   private def signIn(loginId: String, md5Password: String): Unit =
-    tvService.run { tv =>
-      tv.updateAccount(loginId, md5Password)
-      refreshSession()
+    withIndicator {
+      tvService.run { tv =>
+        tv.updateAccount(loginId, md5Password)
+        refreshSession()
+      }
     }
 
   private def promptRetryLogin(messageId: Int, loginId: String): Unit =

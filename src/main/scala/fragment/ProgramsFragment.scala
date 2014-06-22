@@ -40,7 +40,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     runQuery(getArguments.getParcelable("query").asInstanceOf[Query])
   }
 
-  override def onActivityCreated(state: Bundle): Unit = {
+  override def onActivityCreated(state: Bundle): Unit = try {
     super.onActivityCreated(state)
     if (state == null) { return () }
 
@@ -58,7 +58,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       val q = p.asInstanceOf[Query]
       this.lastQuery = Some(q)
     }
-  }
+  } catch handleError
 
   override def onSaveInstanceState(out: Bundle): Unit = {
     // write cards
@@ -78,7 +78,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
     super.onSaveInstanceState(out)
   }
 
-  private def addCard(program: Program, tvSession: TvSession): Unit =
+  private def addCard(program: Program, tvSession: TvSession): Unit = try {
     if (getActivity == null) warn("Skipping addCard")
     else addCard(ProgramCard(
       getActivity,
@@ -90,6 +90,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       tvSession.thumbnailUrl(program.gtvId),
       selectViewerUrl(tvSession, program.gtvId)
     ))
+  } catch handleError
 
   private def selectViewerUrl(tvSession: TvSession, gtvId: String): String = {
     implicit val ctx: Context = context.getApplicationContext
@@ -102,16 +103,16 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
 
   private def searchResultListener(tvSession: TvSession) =
     new SearchResultListener {
-      override def notifyPrograms(programs: Iterator[Program]): Unit = {
+      override def notifyPrograms(programs: Iterator[Program]): Unit = try {
         while (programs.hasNext) {
           val program = programs.next
           debug(program.title)
           addCard(program, tvSession)
         }
-      }
+      } catch handleError
     }
 
-  protected def runQuery(query: Query): Unit = {
+  protected def runQuery(query: Query): Unit = try {
     implicit val ctx = getActivity
     this.lastQuery = Some(query)
 
@@ -131,12 +132,12 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
         }.onFailure(handleError)
       }
     })
-  }
+  } catch handleError
 
   protected def onStartQuery: Unit = hostActivity.onStartQuery
   protected def onFinishQuery: Unit = hostActivity.onFinishQuery
 
-  private def runQuery(query: Query, tvSession: TvSession): Unit = {
+  private def runQuery(query: Query, tvSession: TvSession): Unit = try {
     Option[String](query.key).map(
       ProgramsSearchSuggestions.saveRecentQuery(getActivity, _))
 
@@ -146,7 +147,7 @@ trait ProgramsFragment extends BaseFragment[HostActivity] {
       p = query.page,
       resultListener = searchResultListener(tvSession)
     )
-  }
+  } catch handleError
 }
 
 object ProgramsFragment {

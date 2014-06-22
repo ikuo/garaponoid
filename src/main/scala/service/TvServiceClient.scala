@@ -28,7 +28,7 @@ trait TvServiceClient extends BaseActivity {
     }
   }
 
-  protected def signOut: Unit = {
+  protected def signOut: Unit = try {
     new AlertDialogBuilder(null, R.string.confirm_sign_out) {
       positiveButton(android.R.string.ok, {
         tvService.run(_.signOut)
@@ -36,7 +36,7 @@ trait TvServiceClient extends BaseActivity {
       })
       negativeButton(android.R.string.cancel)
     }.show
-  }
+  } catch handleError
 
   protected def showSignIn(savedInstanceState: Bundle): Unit = tvService.run { tv =>
     if (tv.isSignedIn) {
@@ -58,13 +58,14 @@ trait TvServiceClient extends BaseActivity {
     invalidateOptionsMenu
   }
 
-  private def signIn(loginId: String, md5Password: String): Unit =
+  private def signIn(loginId: String, md5Password: String): Unit = try {
     withIndicator {
       tvService.run { tv =>
         tv.updateAccount(loginId, md5Password)
         refreshSession()
       }
     }
+  } catch handleError
 
   private def promptRetryLogin(messageId: Int, loginId: String): Unit =
     new AlertDialogBuilder(null, messageId) {

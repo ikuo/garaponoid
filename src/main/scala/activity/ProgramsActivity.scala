@@ -50,14 +50,16 @@ class ProgramsActivity
     true
   }
 
-  override def refresh: Unit = fragmentArgument.map { argument =>
-    replaceFragment(
-      new ScrollableProgramsFragment,
-      Some(argument)
-    ).commit
-  }
+  override def refresh: Unit = try {
+    fragmentArgument.map { argument =>
+      replaceFragment(
+        new ScrollableProgramsFragment,
+        Some(argument)
+      ).commit
+    }
+  } catch handleError
 
-  private def consumeIntent: Unit = {
+  private def consumeIntent: Unit = try {
     val intent = getIntent
     setIntent(null)
     if (intent == null) return ()
@@ -71,7 +73,7 @@ class ProgramsActivity
         Some((new Bundle).tap(_.putParcelable("query", query)))
       refresh
     }
-  }
+  } catch handleError
 }
 
 object ProgramsActivity {

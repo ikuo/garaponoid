@@ -83,7 +83,7 @@ class MainActivity
       Some(arguments),
       R.id.fragment_container_new_programs
     ).commit
-  } catch(handleError)
+  } catch handleError
 
   private def updateOptionsMenuVisibility(menu: Menu): Unit = {
     tvService { tv =>

@@ -36,17 +36,19 @@ class ScrollableProgramsFragment
       list.setFastScrollEnabled(true)
     }
 
-  override protected def onStartQuery: Unit = {
+  override protected def onStartQuery: Unit = try {
     val card = new IndicatorCard(getActivity)
     this.indicator = Some(card)
     runOnUiThread {
-      cards.add(card)
-      cardsAdapter.notifyDataSetChanged
+      try {
+        cards.add(card)
+        cardsAdapter.notifyDataSetChanged
+      } catch handleError
     }
     if (currentPage > 1) { super.onStartQuery }
-  }
+  } catch handleError
 
-  override protected def onFinishQuery: Unit = {
+  override protected def onFinishQuery: Unit = try {
     if (cards.size <= 0) { return () }
     runOnUiThread {
       indicator.map { c => cards.remove(c) }
@@ -54,18 +56,21 @@ class ScrollableProgramsFragment
     }
     super.onFinishQuery
     setLoading(false)
-  }
+  } catch handleError
 
   override def addCard(card: Card): Unit = runOnUiThread {
-    cardsAdapter.add(card)
-    cardsAdapter.notifyDataSetChanged
+    try {
+      cardsAdapter.add(card)
+      cardsAdapter.notifyDataSetChanged
+    } catch handleError
   }
 
-  override def loadMoreDataOnScroll(currentPage: Int): Unit =
+  override def loadMoreDataOnScroll(currentPage: Int): Unit = try {
     if (lastQuery.isEmpty)
       warn("Last query is empty. Skipping loadMoreDataOnScroll.")
     else
       runQuery(lastQuery.get.copy(page = currentPage))
+  } catch handleError
 
   override def onSaveInstanceState(out: Bundle): Unit = {
     super.onSaveInstanceState(out)

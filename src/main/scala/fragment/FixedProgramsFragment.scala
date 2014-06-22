@@ -31,18 +31,20 @@ class FixedProgramsFragment extends ProgramsFragment {
 
   override def addCard(card: Card): Unit = addCard(card, -1)
 
-  private def addCard(card: Card, positionOffset: Int): Unit = {
+  private def addCard(card: Card, positionOffset: Int): Unit = try {
     cards.add(card)
     val inflater = getActivity.getLayoutInflater
     val layoutParams = new ViewGroup.LayoutParams(wc, wc)
     val parent = getView.asInstanceOf[ViewGroup]
 
     runOnUiThread {
-      val position = parent.getChildCount + positionOffset
-      val cardView = inflater.inflate(R.layout.fixed_program_card, parent, false).
-        asInstanceOf[CardView].
-        tap(_.setCard(card))
-      parent.addView(cardView, position, layoutParams)
+      try {
+        val position = parent.getChildCount + positionOffset
+        val cardView = inflater.inflate(R.layout.fixed_program_card, parent, false).
+          asInstanceOf[CardView].
+          tap(_.setCard(card))
+        parent.addView(cardView, position, layoutParams)
+      } catch handleError
     }
-  }
+  } catch handleError
 }

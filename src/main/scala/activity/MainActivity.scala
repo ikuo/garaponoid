@@ -67,6 +67,7 @@ class MainActivity
     findView(TR.sign_in_view).visibility(View.GONE)
     findView(TR.main_view).visibility(View.VISIBLE)
     if (savedInstanceState == null) { refresh }
+    invalidateOptionsMenu
   }
 
   override def onStartQuery = spinnerVisible(true)
@@ -86,6 +87,8 @@ class MainActivity
 
   private def updateOptionsMenuVisibility(menu: Menu): Unit = {
     tvService { tv =>
+      menu.findItem(R.id.action_search).setVisible(tv.isSignedIn)
+      menu.findItem(R.id.action_refresh).setVisible(tv.isSignedIn)
       menu.findItem(R.id.action_sign_out).setVisible(tv.isSignedIn)
       menu.findItem(R.id.action_sign_in).setVisible(!tv.isSignedIn)
     }

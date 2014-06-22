@@ -24,7 +24,7 @@ trait TvServiceClient extends BaseActivity {
     }.onFailure {
       case _: UnknownUser => promptRetryLogin(R.string.unknown_user, tv.loginId)
       case _: WrongPassword => promptRetryLogin(R.string.wrong_password, tv.loginId)
-      case e: Throwable => throw e
+      case e: Throwable => fatalError(e)
     }
   }
 
@@ -49,11 +49,13 @@ trait TvServiceClient extends BaseActivity {
     findView(TR.button_sign_in).onClick(promptSignIn())
   }
 
-  protected def showMainPane(savedInstanceState: Bundle): Unit = ()
+  protected def showMainPane(savedInstanceState: Bundle): Unit =
+    invalidateOptionsMenu
 
   private def showSignInPane: Unit = runOnUiThread {
     findView(TR.main_view).setVisibility(View.GONE)
     findView(TR.sign_in_view).setVisibility(View.VISIBLE)
+    invalidateOptionsMenu
   }
 
   private def signIn(loginId: String, md5Password: String): Unit =

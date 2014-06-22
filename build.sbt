@@ -44,11 +44,11 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.github.ikuo" % "garapon4s_2.10" % "0.2.1",
+  "com.github.ikuo" % "garapon4s_2.10" % "0.2.2",
   "org.scaloid" %% "scaloid" % "3.3-8",
   aar("org.apmem.tools" % "layouts" % "1.0"),
   aar("com.github.gabrielemariotti.cards" % "library" % "1.5.0"),
-  aar("com.github.ikuo" % "android-error-dialog_2.10" % "0.1.3-SNAPSHOT")
+  aar("com.github.ikuo" % "android-error-dialog_2.10" % "0.2.0-SNAPSHOT")
 )
 
 

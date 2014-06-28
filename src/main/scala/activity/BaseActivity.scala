@@ -88,9 +88,10 @@ abstract class BaseActivity
   protected def spinnerVisible(value: Boolean) =
     runOnUiThread(setProgressBarIndeterminateVisibility(value))
 
-  protected def activateProgramsSearchOnActionBar(menu: Menu): Unit = {
-    menu.findItem(R.id.action_search).
-      getActionView.asInstanceOf[SearchView].
-      setSearchableInfo(ProgramsActivity.searchableInfo)
-  }
+  protected def activateProgramsSearchOnActionBar(menu: Menu): Unit =
+    Option(ProgramsActivity.searchableInfo).map { searchableInfo =>
+      menu.findItem(R.id.action_search).
+        getActionView.asInstanceOf[SearchView].
+        setSearchableInfo(searchableInfo)
+    }
 }

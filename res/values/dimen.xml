@@ -2,12 +2,12 @@
 <resources>
   <dimen name="card_thumbnail_width">280dp</dimen>
   <dimen name="card_thumbnail_height">163dp</dimen>
-  <dimen name="card_inner_content_height">90dp</dimen>
+  <dimen name="card_inner_content_height">96dp</dimen>
   <dimen name="card_inner_content_margin">5dp</dimen>
   <dimen name="card_inner_header_height">22dp</dimen>
   <dimen name="card_inner_header_margin">5dp</dimen>
   <dimen name="card_main_layout_height">290dp</dimen>
   <dimen name="card_margin_top">5dp</dimen>
   <dimen name="card_shadow_height">5dp</dimen>
-  <dimen name="action_card_main_layout_height">100dp</dimen>
+  <dimen name="action_card_main_layout_height">110dp</dimen>
 </resources>

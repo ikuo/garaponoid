@@ -5,6 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="@dimen/card_inner_content_height"
   android:layout_marginRight="5dp"
+  android:layout_marginBottom="3dp"
 >
   <!-- Description header -->
   <LinearLayout
@@ -41,6 +42,9 @@
     android:layout_height="0dp"
     android:layout_weight="1"
     android:layout_marginTop="2dp"
+    android:ellipsize="end"
+    android:maxLines="4"
+    android:scrollHorizontally="true"
     style="@android:style/TextAppearance.Small"
   />
 </LinearLayout>

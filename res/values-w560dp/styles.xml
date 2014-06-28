@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <style name="programs_grid">
+  <style name="programs_grid" parent="@style/main_background">
     <item name="android:stretchMode">spacingWidthUniform</item>
   </style>
 </resources>

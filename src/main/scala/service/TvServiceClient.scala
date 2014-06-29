@@ -50,7 +50,7 @@ trait TvServiceClient extends BaseActivity {
   }
 
   protected def showMainPane(savedInstanceState: Bundle): Unit =
-    invalidateOptionsMenu
+    runOnUiThread { invalidateOptionsMenu }
 
   private def showSignInPane: Unit = runOnUiThread {
     findView(TR.main_view).setVisibility(View.GONE)

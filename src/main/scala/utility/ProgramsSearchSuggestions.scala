@@ -14,8 +14,9 @@ class ProgramsSearchSuggestions
 object ProgramsSearchSuggestions {
   val authorityName = "com.github.ikuo.garaponoid"
 
-  def saveRecentQuery(context: Context, query: String): Unit = {
-    new SearchRecentSuggestions(context, authorityName, DATABASE_MODE_QUERIES).
-      saveRecentQuery(query, null)
-  }
+  def saveRecentQuery(context: Context, query: String): Unit =
+    if (context != null && query != null) {
+      new SearchRecentSuggestions(context, authorityName, DATABASE_MODE_QUERIES).
+        saveRecentQuery(query, null)
+    }
 }

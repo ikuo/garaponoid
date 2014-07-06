@@ -3,7 +3,8 @@ android:
   components:
     - build-tools-19.0.3
 before_install:
-  - export ANDROID_HOME=`pwd`/android-sdk-linux
+  - echo -n `which android` | sed -e 's/tools\/android$//' |tee /tmp/android-path
+  - export ANDROID_HOME=`cat /tmp/android-path`
   - ls $ANDROID_HOME/
   - wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.deb
   - sudo dpkg -i sbt.deb

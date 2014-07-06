@@ -2,9 +2,6 @@ package com.github.ikuo.garaponoid
 
 import org.scaloid.common._
 import com.github.ikuo.garapon4s.{TvClient, TvSession}
-import android.content.Context
-import android.content.ComponentName
-import android.os.IBinder
 
 class TvService extends LocalService {
   implicit val tag = LoggerTag("TvService")

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.SearchView
 import android.view.Menu
 import com.github.ikuo.android_error_dialog.ErrorDialogFragment
+import com.github.ikuo.garapon4s.ConnectionFailure
 import TypedResource._
 import Tapper.Implicits._
 
@@ -28,7 +29,13 @@ abstract class BaseActivity
     layoutResourceId.map(id => setContentView(id))
   }
 
-  def fatalError(ex: Throwable): Unit = showDialog(ErrorDialogFragment(ex))
+  def fatalError(ex: Throwable): Unit = {
+    val message = ex match {
+      case ConnectionFailure(url, cause) => getString(R.string.connection_failure, url)
+      case _: Throwable => null
+    }
+    showDialog(ErrorDialogFragment(ex, message))
+  }
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     super.onOptionsItemSelected(item)

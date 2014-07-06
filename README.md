@@ -6,7 +6,7 @@ Simply search programs by keyword and show them in cards style as follows:
 
 Distributed on Google Play: https://play.google.com/store/apps/details?id=com.github.ikuo.garaponoid
 
-# Building
+## Building
 Garaponoid is written in [Scala](http://www.scala-lang.org/)
 and built with [sbt](http://www.scala-sbt.org/).
 
@@ -20,6 +20,12 @@ Create a file `./res/values/key.xml` with the following content:
 
 Replace `my_developer_id` with your developer ID of Garapon TV API.
 
+```
+$ git clone git@github.com:ikuo/android-error-dialog.git
+$ cd android-error-dialog/
+$ sbt publish-local
+```
+
 Make a package and start the app by sbt:
 
 ```
@@ -28,11 +34,11 @@ $ sbt
 > run
 ```
 
-# Coding Style
+## Coding Style
 Using [Scala Style Guide](http://docs.scala-lang.org/style/)
 and the followings:
 
-## Method declaration
+### Method declaration
 When many arguments, break lines for each end of argument declaration:
 
 ```scala
@@ -45,13 +51,13 @@ def method1(
 }
 ```
 
-# License
+## License
 
 Apache License 2.0
 
 Copyright (c) 2014, Ikuo Matsumura
 
-# Credits
+## Credits
 Garaponoid is powered by the following works:
 
 - [Garapon4S](https://github.com/ikuo/garapon4s) - Apache License 2.0

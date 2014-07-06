@@ -3,15 +3,14 @@ android:
   components:
     - build-tools-19.0.3
 before_install:
-  - echo -n `which android` | sed -e 's/tools\/android$//' |tee /tmp/android-path
-  - export ANDROID_HOME=`cat /tmp/android-path` && ls $ANDROID_HOME/
+  - echo -n `which android` | sed -e 's/tools\/android$//' |tee /tmp/android-home
+  - export ANDROID_HOME=`cat /tmp/android-home` && ls $ANDROID_HOME/
   - wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.deb
   - sudo dpkg -i sbt.deb
   - git clone https://github.com/ikuo/android-error-dialog.git
   - cd android-error-dialog/
-  - sbt publish-local
+  - export ANDROID_HOME=`cat /tmp/android-home` && ls $ANDROID_HOME/ && sbt publish-local
 scala:
   - 2.10.3
 script:
-  - export ANDROID_HOME=`cat /tmp/android-path` && ls $ANDROID_HOME/
-  - sbt 'android:packageRelease'
+  - export ANDROID_HOME=`cat /tmp/android-home` && ls $ANDROID_HOME/ && sbt 'android:packageRelease'

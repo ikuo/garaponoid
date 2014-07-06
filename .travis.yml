@@ -5,7 +5,7 @@ android:
 before_install:
   - wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.deb
   - sudo dpkg -i sbt.deb
-  - git clone git@github.com:ikuo/android-error-dialog.git
+  - git clone https://github.com/ikuo/android-error-dialog.git
   - cd android-error-dialog/
   - sbt publish-local
 scala:

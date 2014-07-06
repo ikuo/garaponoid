@@ -8,4 +8,4 @@ before_install:
 scala:
   - 2.10.3
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION 'android:packageRelease'
+  - sbt 'android:packageRelease'

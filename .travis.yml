@@ -3,8 +3,8 @@ android:
   components:
     - build-tools-19.0.3
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y sbt
+  - wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.deb
+  - sudo dpkg -i sbt.deb
 scala:
   - 2.10.3
 script:

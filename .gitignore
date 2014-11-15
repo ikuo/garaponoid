@@ -3,6 +3,8 @@ target/
 /gen/
 /.idea
 /local.properties
+/project.properties
+/build.xml
 /res/values/key.xml
 /src/main/scala/endorsed/
 /device*.png

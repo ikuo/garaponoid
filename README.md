@@ -10,6 +10,16 @@ Distributed on Google Play: https://play.google.com/store/apps/details?id=com.gi
 Garaponoid is written in [Scala](http://www.scala-lang.org/)
 and built with [sbt](http://www.scala-sbt.org/).
 
+At first, publish android-error-dialog to local repository by following readme of [android-error-dialog](https://github.com/ikuo/android-error-dialog/blob/master/README.md)
+
+Then, build garaponoid:
+
+```
+$ git clone git@github.com:ikuo/garaponoid.git
+$ android update project -p . -t android-19
+$ git co proguard-project.txt
+```
+
 Create a file `./res/values/key.xml` with the following content:
 
 ```xml
@@ -19,12 +29,6 @@ Create a file `./res/values/key.xml` with the following content:
 ```
 
 Replace `my_developer_id` with your developer ID of Garapon TV API.
-
-```
-$ git clone git@github.com:ikuo/android-error-dialog.git
-$ cd android-error-dialog/
-$ sbt publish-local
-```
 
 Make a package and start the app by sbt:
 

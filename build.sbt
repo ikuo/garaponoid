@@ -5,13 +5,13 @@ android.Plugin.androidBuild
 
 name := "Garaponoid"
 
-version := "0.2.20"
+version := "0.2.21"
 
 scalaVersion := "2.10.3"
 
 versionName in Android := Some(version.value)
 
-versionCode in Android := Some(30)
+versionCode in Android := Some(31)
 
 targetSdkVersion in Android := 19
 
@@ -44,7 +44,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.github.ikuo" % "garapon4s_2.10" % "0.2.6",
+  "com.github.ikuo" % "garapon4s_2.10" % "0.2.7",
   "org.scaloid" %% "scaloid" % "3.3-8",
   aar("org.apmem.tools" % "layouts" % "1.0"),
   aar("com.github.gabrielemariotti.cards" % "library" % "1.5.0"),

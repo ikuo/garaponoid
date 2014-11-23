@@ -38,23 +38,6 @@ $ sbt
 > run
 ```
 
-## Coding Style
-Using [Scala Style Guide](http://docs.scala-lang.org/style/)
-and the followings:
-
-### Method declaration
-When many arguments, break lines for each end of argument declaration:
-
-```scala
-def method1(
- argument1: String,
- argument2: String,
- ...
-): Unit = {
-  ...
-}
-```
-
 ## License
 
 Apache License 2.0
